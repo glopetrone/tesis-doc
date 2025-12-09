@@ -1,0 +1,408 @@
+\section{Desarrollo}
+
+Para modelar nuestro sistema empezamos usando una configucación en particular para luego intentar generalizar a cualquier otro caso. Comenzamos con dos modelos en paralelo, cada uno con unos datos de entrada distintos, uno recibe imágenes médicas y el otro recibe la historia clínica de un paciente. Luego de que esos modelos devuelven cada uno su resultado de la clasificación, son pasados a un fusionador que se encarga de unificarlos y devolver un único resultado para todo el sistema.
+
+Decidimos modelar ese escenario como una red bayesiana causal, donde los nodos representan una etapa del proceso con su información asociada y las aristas indican causalidad, determinando de que otros datos depende un dato dentro del proceso. Los nodos con doble circulo son nodos que dependen de forma determinística de sus padres. 
+
+\centering
+\begin{tikzpicture}[scale=1, every node/.style={font=\large},
+fontSize/.style={font=\large}]
+    % Nodos
+    \node[draw, fill=blue!30, minimum width=9cm, minimum height=9cm] at (0,6.5) (Sistema) {}; 
+    \node[font=\huge, left = 0.1cm of Sistema] (Descripcion Sistema) {\color{blue} \textbf{Sistema}};
+    
+    \node[latent, fontSize, fill=green!10] at (0,15) (Persona) {$Persona$};
+    
+    \node[latent, fontSize, double, fill=green!40] at (5,13) (Clase) {$Clase$};
+    
+    \node[latent, fontSize, fill=green!10] at (-2,12) (Imagen) {$Imagen$};
+    \node[latent, fontSize, fill=green!10] at (2,12) (Historia) {$Historia$};
+    
+    \node[latent, fontSize, fill=blue!20] at (-2,9) (Pred M1) {$Pred^{M1}$};
+    \node[latent, fontSize, fill=blue!20] at (2,9) (Pred M2) {$Pred^{M2}$};
+    
+    \node[latent, fontSize, double, fill=blue!10] at (-3,6) (Conf M1) {$Conf^{M1}$};
+    \node[latent, fontSize, double, fill=blue!10] at (3,6) (Conf M2) {$Conf^{M2}$};
+    
+    \node[latent, fontSize, fill=red!20] at (0,3) (Pred S) {$Pred^S$};
+    \node[latent, fontSize, double, fill=red!10] at (0,0) (Conf S) {$Conf^S$};
+    \node at (0,5) (Fusionador) {\textbf{fusionador}};
+    % Aristas
+    \edge[->] {Persona} {Clase};
+    \edge[->] {Persona} {Imagen};
+    \edge[->] {Persona} {Historia};
+    \draw[->] (Imagen) to node[left] {\textbf{modelo 1}} (Pred M1);
+    \draw[->] (Historia) to node[right] {\textbf{modelo 2}} (Pred M2);
+    \edge[->] {Pred M1} {Conf M1};
+    \edge[->] {Pred M2} {Conf M2};
+    \edge[->] {Pred M1} {Pred S};
+    \edge[->] {Pred M2} {Pred S};
+    \edge[->] {Pred S} {Conf S};
+    \draw[->] (Clase) to[bend left] (Conf M1.east);
+    \draw[->] (Clase.280) to[bend left] (Conf M2.north east);
+    \draw[->] (Clase.south east) to[bend left] (Conf S.east);
+\end{tikzpicture}
+
+El modelo que buscamos evaluar es el modelo 2 que recibe histórias clínicas. Buscamos darle un costo a los errores que pueda cometer el modelo 2, dandole a cada clase un costo particular según cuanto afecta al sistema en su totalidad.
+
+Para definir esta idea más formalmente usamos la matriz de confusión y su matriz de costo asociada.
+
+La matriz de confusión es una matriz que tiene como columnas las clases reales a las que pertenecen los datos que evaluamos, y como filas a las clases que nuestro clasificador predijo. Luego en cada celda de la matriz se encuentra un número entero que representa la cantidad de ocurrencias de esa combinación en particular luego de ejecutar al clasificador sobre nuestros datos de evaluación.
+
+La matriz de costo asociada a la matriz de confusión es una forma de darle un costo a cada tipo de error de la matriz de confusión. Es una matriz con las mismas dimensiónes, pero en lugar de contar cantidad de ocurrencias, le da un costo particular a cada tipo de error, siendo que la predicción difiera de la clase real. A los datos para los cuales nuestra predicción acertó se le suele dar un costo de 0. \\
+
+\begin{center}
+\begin{minipage}[t]{0.75\linewidth}
+\begin{tabular}{c | c | c |} % Left-aligned, Centered, Right-aligned columns
+     & Predicci\'on Positive & Predicci\'on Negative \\
+    \hline
+    Clase Positive & $Conf_{TP}$ & $Conf_{FN}$ \\
+    \hline
+    Clase Negative & $Conf_{FP}$ & $Conf_{TN}$ \\
+    \hline
+\end{tabular} 
+Matriz de confusi\'on \\
+
+
+\begin{tabular}{c | c | c |} % Left-aligned, Centered, Right-aligned columns
+     & Predicci\'on Positive & Predicci\'on Negative \\
+    \hline
+    Clase Positive & $Costo_{TP}$ & $Costo_{FN}$ \\
+    \hline
+    Clase Negative & $Costo_{FP}$ & $Costo_{TN}$ \\
+    \hline
+\end{tabular} 
+Matriz de costo
+\end{minipage}
+\end{center}
+
+Esa matriz nos permite a la hora de evaluar al clasificador, dar un costo realista a cada error con el objetivo de que refleje los costos reales de cometerlos en la realidad. De esta forma elegir un clasificador sobre otro cuando la suma para todas las instancias de los costos asociados a la predicción que hagamos sea mínima, consiguiendo un clasificador que se adapte mejor a nuestra situación de uso.
+
+La forma de evaluar el costo de un clasificador es correrlo para muchas instancias y contar la cantidad de veces que ocurre cada tipo de resultado en la matriz de confusi\'on. Luego multiplicarla elemento a elemento con la matriz de costo asociada y sumar todos los resultados. A mayor costo, peor es el funcionamiento del clasificador para esas instancias.
+
+Para cualquier sistema clasificador, sucede que la matriz de costo est\'a definida para la clasificaci\'on final del sistema, pero nosotros queremos evaluar que tan bien funciona un modelo integrante de ese sistema. En particular el modelo 2 de historias cl\'inicas en este caso.
+
+Por lo tanto debemos derivar una matriz de costo asociada al modelo en base la matriz de costo del sistema y algunas otras caracter\'isticas seg\'un el objetivo que buscamos para nuestra matriz de costo.
+
+Podemos querer una matriz de costo para distintos objetivos y vamos a analizar algunos de ellos:
+
+
+
+
+\subsection{Estimaci\'on del costo del sistema para los resultados del modelo}
+
+Una primera idea es para cada resultado del modelo 2, sumar la probabilidad de que ese resultado cause un fallo en el sistema y pesarlo por el costo de ese fallo en particular. Por ejemplo si nuestro modelo de histórias clínicas clasifica a una persona que se encontraba sana como alguien que tiene un problema de salud, sumar la probabilidad de que esa mala clasificación se translade al sistema y resulte en que el sistema también se equivoque en la clasificación. Luego lo pesamos por el costo del error del sistema para un False Negative.
+
+\begin{itemize}
+
+\item Probabilidad de error del sistema cuando el modelo 2 falla:
+
+Clase Positive: $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = N))$ \\
+Clase Negative: $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = P))$ \\
+
+\item Probabilidad de error del sistema cuando el modelo 2 acierta:
+
+Clase Positive: $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$ \\
+Clase Negative: $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$ \\
+
+\end{itemize}
+
+Ahora sabiendo la probabilidad de que cada resulado del modelo 2 cause un error en el sistema, pesando esas probabilidades por los costos reales de los fallos podemos calcular los costos asociados al modelo 2. \\
+
+\begin{itemize}
+
+\item Costo de una instancia para el modelo 2:\\
+$Costo^{M2}_{TP}$ = $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$ x $Costo^S_{FN}$ \\
+$Costo^{M2}_{TN}$ = $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$ x $Costo^S_{FN}$ \\
+$Costo^{M2}_{FN}$ = $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = N))$ x $Costo^S_{FP}$ \\
+$Costo^{M2}_{FP}$ = $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = P))$ x $Costo^S_{FP}$ \\
+
+Tenemos una funci\'on de costo asociada a cada resultado posible del modelo 2.
+
+
+
+
+Para evaluar el modelo 2, lo corremos para un conjunto de instancias conocidas y multiplicamos cada una de las confusi\'ones obtenidas por el costo asociado a ellas que acabamos de estimar. Luego sumamos esos valores. \\
+
+ \item  Evaluación para el modelo 2:
+ 
+$Eval^{M2}$ = $Costo^{M2}_{TP}$ x $Conf^{M2}_{TP}$ + $Costo^{M2}_{TN}$ x $Conf^{M2}_{TN}$ + $Costo^{M2}_{FP}$ x $Conf^{M2}_{FP}$ + $Costo^{M2}_{FN}$ x $Conf^{M2}_{FN}$ \\
+
+Donde $Conf^{M2}_{FP}$ se refiere a la cantidad de instancias que clasificamos de forma Positive y eran de clase Negative al correr el modelo 2 individualmente. \\
+
+Ahora tenemos una forma de evaluar el costo de cada tipo de error para el modelo 2 de forma individual, estimando el costo al sistema sin necesidad de ejecutarlo. Más adelante veremos algunos casos de ejemplo.
+
+\end{itemize}
+
+
+
+\subsection{Representaci\'on del costo de los fallos del modelo en el sistema}
+
+Como vimos anteriormente, la matriz de costo asociada a un problema de clasificaci\'on suele tener un costo de 0 para los aciertos (elementos de la diagonal). Nuestra funci\'on de costo anterior no cumple esa propiedad. Con esta funci\'on buscamos que se cumpla eso, sin perder la influencia que tienen los resultados de nuestro modelo a nivel sistema.
+
+A su vez solo penalizamos los errores del modelo que efectivamente causen una perdida de rendimiento del sistema, y reducimos el costo de los errores que no tienen impacto en el resultado para mantener la relaci\'on entre los distintos resultados de una clase. 
+
+Esto lo logramos restando a la probabilidad de fallo del sistema cuando el modelo falla, la probabilidad de fallo del sistema cuando el modelo acierta que llamamos Tasa de transici\'on de error. Este valor resultante nos da la probabilidad que fallar introduzca un nuevo error que acertar hubiera podido evitar.\\
+
+\begin{itemize}
+
+\item Tasa de transición de error:
+
+Clase Positive: $P_{\mathcal{G}}(Conf F = FN | Clase = P, \text{do}(Pred 2 = N)) - P_{\mathcal{G}}(Conf F = FN | Clase = P, \text{do}(Pred 2 = P))$ \\
+
+Clase Negative: $P_{\mathcal{G}}(Conf F = FP | Clase = N, \text{do}(Pred 2 = P)) - P_{\mathcal{G}}(Conf F = FP | Clase = N, \text{do}(Pred 2 = N))$ 
+
+Estas probabilidades solo tiene sentido definirlas para los fallos del modelo. Para los aciertos del modelo el primer y segundo t\'ermino son id\'enticos y se cancelan mutuamente consiguiendo una probabilidad de 0 como buscabamos.
+
+
+
+Para conseguir la funci\'on de costo buscada solo queda multiplicar por el costo real del error en el sistema como habiamos hecho antes. \\
+
+\item Costo de una instancia para el modelo 2: 
+
+$Costo^{M2}_{TP}$ = 0 =
+
+($P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$ - $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$) x $Costo^S_{FN}$ \\
+
+$Costo^{M2}_{TN}$ = 0 =
+
+($P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$ - $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$) x $Costo^S_{FN}$ \\
+
+$Costo^{M2}_{FN}$ = 
+
+($P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = N))$ - $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$) x $Costo^S_{FP}$ \\
+
+$Costo^{M2}_{FP}$ = 
+
+($P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = P))$ - $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$) x $Costo^S_{FP}$ \\
+
+Aca podemos observar como en el caso de True Positive y True Negative se resta y suma el mismo término. Esto nos da una probabilidad de 0 que luego se transifiere a que el costo asociado tambi\'en sea 0.
+
+% Para que esto sea cierto asumimos lo siguiente: 
+
+% Frente a las instancias en las que el modelo 2 falla y el fusionador acierta, en caso del modelo 2 acertar, el fusionador no comienza a generar errores que previamente no había.
+
+Evaluar el modelo 2 en base a esta nueva función de costo es igual que antes. Luego de correr nuestro modelo para un conjunto de instancias, multiplicamos la cantidad de apariciones de cada tipo de resultado por el costo asociado y los sumamos. \\
+
+\item Evaluación para el modelo 2: 
+
+$Eval^{M2}$ = $Costo^{M2}_{TP}$ x $Conf^{M2}_{TP}$ + $Costo^{M2}_{TN}$ x $Conf^{M2}_{TN}$ + $Costo^{M2}_{FP}$ x $Conf^{M2}_{FP}$ + $Costo^{M2}_{FN}$ x $Conf^{M2}_{FN}$ \\
+
+\end{itemize}
+
+
+
+\subsection{Costo de peor caso del sistema}
+
+En los casos anteriores usamos la funci\'on de costo para que frente a un modelo 2, al evaluarlo con alguna de esas funci\'ones podamos ver cuanto se ve afectada la evaluaci\'on final del sistema. Esto no es del todo acertado para el caso general ya que la evaluaci\'on solo va a ser exacta cuando los modelos que componen el sistema sean independientes uno de otro frente a sus instancias. En cuanto se rompa esa independencia la evaluaci\'on del modelo 2 comienza a diferir del resultado real del sistema al correrlo con ese modelo. 
+
+Como ejemplo veamos el caso donde tenemos un fusionador AND l\'ogico que predice positivo si al menos una de los 2 modelos predicen positivo. A su vez tenemos un modelo 1 con un 50\% de accuracy para la clase positiva y un costo de 1 el error de False Negative asociado. Al calcular el costo con nuestra primera funci\'on obtenemos que para la clase positiva el costo de un True Positive es de 1/2 y de un False Negative es de 1. Al correrlo para 100 instancias con un modelo 2 de 50\% de accuracy observamos que el costo total del sistema es de 100 para esa clase en vez de 75, que nuestro modelo 2 estima en base a los resultados. Al observar mas cuidadosamente como funciona el sistema vemos que los errores de los modelos suelen ser en lugares distintos por lo que aunque ambos tengan 50\% de accuracy para la clase positiva, como fallan siempre en instancias distintas nuestro fusionador nunca acierta correctamente para esa clase.
+
+En estas situaciones definir previamente una funci\'on de costo para cualquier modelo 2 y esperar que funcione correctamente en el sistema no es posible, por lo que buscamos analizar como se comporta el peor caso. El objetivo de esta tercera funci\'on es determinar cual es el peor resultado posible que nuestro sistema pueda llegar a tener dada una matriz de confusi\'on del modelo que buscamos evaluar. \\
+
+\begin{itemize}
+
+\item Cantidad m\'axima de errores posibles del sistema cuando el modelo devuelve TP (1) = 
+
+Min($Conf^{M2}_{TP}$, $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$ x $Cantidad Positive$) \\
+
+\item Cantidad m\'axima de errores posibles del sistema cuando el modelo devuelve TN (2) = 
+
+Min($Conf^{M2}_{TN}$, $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$ x $Cantidad Negative$) \\
+
+Estos dos valores dicen la cantidad m\'axima de errores posibles del sistema dado que nuestro modelo acierte, uno para cada clase. Dado que la probabilidad dentro del m\'inimo es la cantidad maxima de fallos que puede haber si el modelo acierta siempre, este peor caso considera que cada acierto nuestro justo cae en un caso en los que el sistema falla igual incluso con el acierto del modelo. \\
+
+\item Cantidad m\'axima de errores posibles del sistema cuando el modelo devuelve FN (3) = 
+
+Min($Conf^{M2}_{FN}$, \newline \hspace*{0.6cm} $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = N))$ x $Cantidad Positive$ - \newline \hspace*{0.6cm} Min($Conf^{M2}_{TP}$, $P_{\mathcal{G}}(Conf^S = FN | Clase = P, \text{do}(Pred^{M2} = P))$ x $Cantidad Positive$)) \\
+
+\item Cantidad m\'axima de errores posibles del sistema cuando el modelo devuelve FP (4) = 
+
+Min($Conf^{M2}_{FP}$, \newline \hspace*{0.6cm} $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = P))$ x $Cantidad Negative$ - \newline \hspace*{0.6cm} Min($Conf^{M2}_{TN}$, $P_{\mathcal{G}}(Conf^S = FP | Clase = N, \text{do}(Pred^{M2} = N))$ x $Cantidad Negative$)) \\
+
+Estos otros dos valores nos dicen lo mismo pero para los casos donde el modelo falla. La cantidad m\'axima de fallos posibles en este caso es la primera probabilidad que se encuentra dentro del m\'imimo externo. Pero a esa cantidad m\'axima de fallos debemos quitarle la cantidad que ya le asignamos a los aciertos anteriormente. 
+
+Esto se debe a que ambas probabilidades son calculadas sobre el total de instancias, y asumimos que las instancias para las cuales acert\'o el modelo pero en cambio el sistema fall\'o, si el modelo hubiera fallado entonces el sistema seguir\'ia fallando. A su vez podemos asumir que si el modelo fall\'o y el sistema acert\'o en la clasificaci\'on, si el modelo hubiera acertado entonces se mantiene el acierto del sistema para cualquier instancia.
+
+En base a esto es que a las instancias donde tanto el sistema como el modelo fallan le restamos los fallos del sistema donde el modelo acert\'o porque asumimos que las instancias esas ya fueron contempladas.
+
+Luego nos queda construir la funci\'on de costo en base a estos valores. Como cada uno representa el peor caso del sistema para distintos resultados nuestro modelo, sumamos los errores de la misma clase y los multiplicamos por su costo asociado. el resto de las instancias de cada clase las asignamos a predicciones correctas del sistema. \\
+
+\begin{center}
+\begin{tabular}{c | c | c |} % Left-aligned, Centered, Right-aligned columns
+     & Predicci\'on Positive & Predicci\'on Negative \\
+    \hline
+    Clase Positive & ($Conf^{M2}_{TP}$-(1) + $Conf^{M2}_{FN}$-(3)) x 0 & ((1) + (3)) x $Costo^S_{FN}$ \\
+    \hline
+    Clase Negative & ((2) + (4)) x $Costo^S_{FP}$ & ($Conf^{M2}_{TP}$-(2) + $Conf^{M2}_{FN}$-(4)) x $0$ \\
+    \hline
+\end{tabular} 
+\end{center}
+
+
+
+\end{itemize}
+
+\section{Experimentación}
+
+Ejemplos para distintos casos:
+
+\textbf{FUNCI\'ON DE COSTO NUMERO 1}
+
+\begin{enumerate}
+
+\item Para un modelo de imágenes con un 80\% de accuracy para ambas clases usando un fusionador AND lógico y el costo para el sistema de un False Positive es 1 y False Negative 5: \\
+
+
+Probabilidad de error del sistema cuando el modelo 2 falla:
+
+Clase Positive = 100\%, Clase Negative = 20\% \\
+
+Probabilidad de error del sistema cuando el modelo 2 acierta:
+
+Clase Positive = 20\%, Clase Negative = 0\% \\
+
+Costo de una instancia para el modelo 2:
+
+$Costo^{M2}_{TP}$ = 20\% x 5 = 1
+
+$Costo^{M2}_{TN}$ = 0\% x 1 = 0
+
+$Costo^{M2}_{FP}$ = 20\% x 1 = 0.2
+
+$Costo^{M2}_{FN}$ = 100\% x 5 = 5 \\
+
+
+Luego en caso de correr al sistema con 100 instancias de la clase Positiva y 200 instancias de la clase Negativa, y un modelo 2 de 50\% accuracy, asumiendo que los errores cometidos por ambos modelos fueran independientes, esperaríamos obtener los siguientes resultados: \\
+
+
+$P_{\mathcal{G}}(Conf^S = FN | Clase = P)$ = 100\% - (80\% x 50\%) = 60\%
+
+$P_{\mathcal{G}}(Conf^S = FP | Clase = N)$ = (100\% - 80\%) x (100\% - 50\%) = 10\%
+
+$Costo^S_{Total}$ = 60\% x 100 x 5 + 10\% x 200 x 1 = 300 + 20 = 320
+
+$Costo^{M1}_{Total}$ = 50\% x 100 x 1 + 50\% x 200 x 0 + 50\% x 200 x 0.2 + 50\% x 100 x 5 = 300 + 20 = 320 \\
+
+
+Podemos ver como los costos son los mismos para tanto el modelo como el sistema en este caso. También esta igualdad se mantiene dentro de cada clase. \\
+
+
+
+\item Para un modelo de imágenes con un 25\% de accuracy para la clase Positiva y 50\% para la Negativa usando un fusionador OR lógico y el costo para el sistema de un False Positive es 1 y False Negative 5: \\
+
+
+Probabilidad de error del sistema cuando el modelo 2 falla:
+
+Clase Positiva = 75\%, Clase Negativa = 100\% \\
+
+Probabilida de error del sistema cuando el modelo 2 acierta: 
+
+Clase Positiva = 0\%, Clase Negativa = 50\% \\
+
+
+Costo de una instancia para el modelo 2:
+
+$Costo^{M2}_{TP}$ = 0\% x 5 = 0
+
+$Costo^{M2}_{TN}$ = 50\% x 1 = 0.5
+
+$Costo^{M2}_{FP}$ = 100\% x 1 = 1
+
+$Costo^{M2}_{FN}$ = 75\% x 5 = 3.75 \\
+
+
+Si corremos el sistema para 100 instancias de la clase Positiva y 200 de Negativa, con un modelo 2 con 40\% accuracy para clase Positiva y 50\% Negativa asumiendo que los errores de ambos modelos son independientes esperaríamos obtener los siguientes resultados:
+
+
+$P_{\mathcal{G}}(Conf^S = FN | Clase = P)$ = (100\% - 25\%) x (100\% - 40\%) = 45\%
+
+$P_{\mathcal{G}}(Conf^S = FP | Clase = N)$ = 100\% - (100\% - 50\%) x (100\% - 50\%) = 75\%
+
+$Costo^S_{Total}$ = 45\% x 100 x 5 + 75\% x 200 x 1 = 225 + 150 = 375
+
+$Costo^{M1}_{Total}$ = 40\% x 100 x 0 + 50\% x 200 x 0.5 + 50\% x 200 x 1 + 60\% x 100 x 3.75 = 225 + 150 = 375 \\
+
+
+En este otro caso sucede lo mismo que en el anterior. Mientras los errores sean independientes, el costo del modelo 2 y del sistema son idénticos para cada clase.
+
+\end{enumerate}
+
+\textbf{FUNCI\'ON DE COSTO NUMERO 2}
+
+\begin{enumerate}
+
+\item Para un modelo de imágenes con un 80\% de accuracy para ambas clases usando un fusionador AND lógico y el costo para el sistema de un False Positive es 1 y False Negative 5: \\
+
+
+Probabilidad de error del sistema cuando el modelo 2 falla:
+
+Clase Positive = 100\%, Clase Negative = 20\% \\
+
+Probabilidad de error del sistema cuando el modelo 2 acierta:
+
+Clase Positive = 20\%, Clase Negative = 0\% \\
+
+Costo de una instancia para el modelo 2:
+
+$Costo^{M2}_{TP}$ = (20\% - 20\%) x 5 = 0
+
+$Costo^{M2}_{TN}$ = (0\% - 0\%) x 1 = 0
+
+$Costo^{M2}_{FP}$ = (20\% - 0\%) x 1 = 0.2
+
+$Costo^{M2}_{FN}$ = (100\% - 20\%) x 5 = 4 \\
+
+
+Luego en caso de correr al sistema con 100 instancias de la clase Positiva y 200 instancias de la clase Negativa, y un modelo 2 de 50\% accuracy, asumiendo que los errores cometidos por ambos modelos fueran independientes, esperaríamos obtener los siguientes resultados: \\
+
+
+$P_{\mathcal{G}}(Conf^S = FN | Clase = P)$ = 100\% - (80\% x 50\%) = 60\%
+
+$P_{\mathcal{G}}(Conf^S = FP | Clase = N)$ = (100\% - 80\%) x (100\% - 50\%) = 10\%
+
+$Costo^S_{Total}$ = 60\% x 100 x 5 + 10\% x 200 x 1 = 300 + 20 = 320
+
+$Costo^{M1}_{Total}$ = 50\% x 100 x 0 + 50\% x 200 x 0 + 50\% x 200 x 0.2 + 50\% x 100 x 4 = 200 + 20 = 220 \\
+
+
+
+\item Para un modelo de imágenes con un 25\% de accuracy para la clase Positiva y 50\% para la Negativa usando un fusionador or lógico y el costo para el sistema de un False Positive es 1 y False Negative 5: \\
+
+
+Probabilidad de error del sistema cuando el modelo 2 falla:
+
+Clase Positiva = 75\%, Clase Negativa = 100\% \\
+
+Probabilida de error del sistema cuando el modelo 2 acierta: 
+
+Clase Positiva = 0\%, Clase Negativa = 50\% \\
+
+
+Costo de una instancia para el modelo 2:
+
+$Costo^{M2}_{TP}$ = (0\% - 0\%) x 5 = 0
+
+$Costo^{M2}_{TN}$ = (50\% - 50\%) x 1 = 0
+
+$Costo^{M2}_{FP}$ = (100\% - 50\%) x 1 = 0.5
+
+$Costo^{M2}_{FN}$ = (75\% - 0\%) x 5 = 3.75 \\
+
+
+Si corremos el sistema para 100 instancias de la clase Positiva y 200 de Negativa, con un modelo 2 con 40\% accuracy para clase Positiva y 50\% Negativa asumiendo que los errores de ambos modelos son independientes esperaríamos obtener los siguientes resultados:
+
+
+$P_{\mathcal{G}}(Conf^S = FN | Clase = P)$ = (100\% - 25\%) x (100\% - 40\%) = 45\%
+
+$P_{\mathcal{G}}(Conf^S = FP | Clase = N)$ = 100\% - (100\% - 50\%) x (100\% - 50\%) = 75\%
+
+$Costo^S_{Total}$ = 45\% x 100 x 5 + 75\% x 200 x 1 = 225 + 150 = 375
+
+$Costo^{M1}_{Total}$ = 40\% x 100 x 0 + 50\% x 200 x 0 + 50\% x 200 x 0.5 + 60\% x 100 x 3.75 = 225 + 50 = 275 \\
+
+\end{enumerate}
+
+Para la función de costo número 2, el fusionador con un AND lógico da costos iguales al sistema para la clase Negative y distintos para Positive. El caso del fusionador con un OR, la clase Positive es la que da igual y Negative distinta. 
+
+Se puede ver que para cada clase en particular, si el sistema no introduce ningún error en los casos donde el modelo 2 clasifica correctamente, tanto el costo del sistema como el del modelo 2 serán iguales. Si el sistema ya introducía errores incluso acertando en el modelo 2, el costo de la clase se verá reducido proporcionalmente.
