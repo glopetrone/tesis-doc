@@ -78,35 +78,36 @@ Una Red Bayesiana es un Grafo Ac\'iclico Dirigido, donde se representan distribu
 
 Para el problema a tratar, voy a modelar con un nodo raiz la poblaci\'on de datos, del cual depende la Clase a la que pertenecen y las distinas features que se observan sobre ese dato. Luego esas features son analizadas por el sistema y por \'ultimo se consigue una predicci\'on y su confusi\'on asociada dependiendo de la clase a la que pertenece ese dato.
 
+
 \begin{center}
 \begin{tikzpicture}[
-        scale=1, every node/.style={font=\large},
-        fontSize/.style={font=\large}
+        scale=1, every node/.style={font=\normalfont},
+        fontSize/.style={font=\normalfont}
     ]
 
     % Descripcion
-    \node[draw, fill=blue!30, minimum width=12cm, minimum height=6cm] at (0,7.75) (Sistema) {}; 
+    \node[draw, fill=blue!30, minimum width=12cm, minimum height=4.5cm] at (0,5.25) (Sistema) {};
     \node[font=\huge, right = 0.1cm of Sistema] (Descripcion Sistema) {\textcolor{blue}{\textbf{Sistema}}};
     
     % Instancias
-    \node[latent, fontSize, fill=green!10] at (0,15) (Instancia) {$Instancia$};
-    \node[latent, fontSize, double, fill=green!40] at (8,13.5) (Clase) {$Clase$};
+    \node[latent, fontSize, fill=green!10] at (0,10.5) (Instancia) {$Instancia$};
+    \node[latent, fontSize, double, fill=green!40] at (8,9.5) (Clase) {$Clase$};
     
     % Features
-    \node[latent, fontSize, fill=green!10] at (-4.5,12) (Feature1) {$Feature1$};
-    \node[latent, fontSize, fill=green!10] at (-1.5,12) (Feature2) {$Feature2$};
-    \node[fontSize] at (1.5,12) (FeatureI) {...};
-    \node[latent, fontSize, fill=green!10] at (4.5,12) (FeatureN) {$FeatureN$};
+    \node[latent, fontSize, fill=green!10] at (-4.5,8.5) (Feature1) {$Feature1$};
+    \node[latent, fontSize, fill=green!10] at (-1.5,8.5) (Feature2) {$Feature2$};
+    \node[fontSize] at (1.5,8.5) (FeatureI) {...};
+    \node[latent, fontSize, fill=green!10] at (4.5,8.5) (FeatureN) {$FeatureN$};
     
     % Modelos
-    \node[latent, fontSize, fill=blue!20] at (-4.5,9) (Pred M1) {$Pred^{M1}$};
-    \node[latent, fontSize, fill=blue!20] at (-1.5,9) (Pred M2) {$Pred^{M2}$};
-    \node[fontSize] at (1.5,9) (Pred Mi) {...};
-    \node[latent, fontSize, fill=blue!20] at (4.5,9) (Pred Mn) {$Pred^{Mn}$};
+    \node[latent, fontSize, fill=blue!20] at (-4.5,6) (Pred M1) {$Pred^{M1}$};
+    \node[latent, fontSize, fill=blue!20] at (-1.5,6) (Pred M2) {$Pred^{M2}$};
+    \node[fontSize] at (1.5,6) (Pred Mi) {...};
+    \node[latent, fontSize, fill=blue!20] at (4.5,6) (Pred Mn) {$Pred^{Mn}$};
     
     % Outputs
-    \node at (0,6.5) (Fusionador) {\textbf{fusionador}};
-    \node[latent, fontSize, fill=red!20] at (0,3) (Pred S) {$Pred^S$};
+    \node at (0,4) (Fusionador) {\textbf{fusionador}};
+    \node[latent, fontSize, fill=red!20] at (0,2) (Pred S) {$Pred^S$};
     \node[latent, fontSize, double, fill=red!10] at (0,0) (Conf S) {$Conf^S$};
 
     % Aristas
@@ -126,6 +127,7 @@ Para el problema a tratar, voy a modelar con un nodo raiz la poblaci\'on de dato
 
     \draw[->] (Pred S) to (Conf S);
     \draw[->] (Clase.south east) to[bend left] (Conf S.east);
+
 \end{tikzpicture}
 \end{center}
 
@@ -136,32 +138,32 @@ Empiezo usando un sistema en particular para analizar y intentar generalizar a o
 
 \begin{center}
 \begin{tikzpicture}[
-        scale=1, every node/.style={font=\large},
-        fontSize/.style={font=\large}
+        scale=1, every node/.style={font=\normalfont},
+        fontSize/.style={font=\normalfont}
     ]
 
     % Descripcion
-    \node[draw, fill=blue!30, minimum width=9.5cm, minimum height=6.5cm] at (0,7.75) (Sistema) {};
-    \node[font=\huge, right = 0.1cm of Sistema] (Descripcion Sistema) {\color{blue} \textbf{Sistema}};
+    \node[draw, fill=blue!30, minimum width=9.5cm, minimum height=4.5cm] at (0,5.25) (Sistema) {};
+    \node[font=\huge, right = 0.1cm of Sistema] (Descripcion Sistema) {\textcolor{blue}{\textbf{Sistema}}};
     
     % Instancias
-    \node[latent, fontSize, fill=green!10] at (0,15) (Persona) {$Persona$};
-    \node[latent, fontSize, double, fill=green!40] at (5,13) (Clase) {$Clase$};
+    \node[latent, fontSize, fill=green!10] at (0,10.5) (Persona) {$Persona$};
+    \node[latent, fontSize, double, fill=green!40] at (5,9) (Clase) {$Clase$};
     
     % Features
-    \node[latent, fontSize, fill=green!10] at (-2,12) (Imagen) {$Imagen$};
-    \node[latent, fontSize, fill=green!10] at (2,12) (Historia) {$Historia$};
+    \node[latent, fontSize, fill=green!10] at (-2,8.5) (Imagen) {$Imagen$};
+    \node[latent, fontSize, fill=green!10] at (2,8.5) (Historia) {$Historia$};
     
     % Modelos
-    \node[latent, fontSize, fill=blue!20] at (-2,9) (Pred M1) {$Pred^{M1}$};
-    \node[latent, fontSize, fill=blue!20] at (2,9) (Pred M2) {$Pred^{M2}$};
-    \node[latent, fontSize, double, fill=blue!10] at (-3,6) (Conf M1) {$Conf^{M1}$};
-    \node[latent, fontSize, double, fill=blue!10] at (3,6) (Conf M2) {$Conf^{M2}$};
+    \node[latent, fontSize, fill=blue!20] at (-2,6) (Pred M1) {$Pred^{M1}$};
+    \node[latent, fontSize, fill=blue!20] at (2,6) (Pred M2) {$Positive$};
+    \node[latent, fontSize, double, fill=blue!10] at (-3,4) (Conf M1) {$Conf^{M1}$};
+    \node[latent, fontSize, double, fill=blue!10] at (3,4) (Conf M2) {$Conf^{M2}$};
     
     % Outputs
-    \node[latent, fontSize, fill=red!20] at (0,3) (Pred S) {$Pred^S$};
+    \node at (0,4) (Fusionador) {\textbf{fusionador}};
+    \node[latent, fontSize, fill=red!20] at (0,2) (Pred S) {$Pred^S$};
     \node[latent, fontSize, double, fill=red!10] at (0,0) (Conf S) {$Conf^S$};
-    \node at (0,6.5) (Fusionador) {\textbf{fusionador}};
 
     % Aristas
     \draw[->] (Persona) to (Clase);
@@ -182,3 +184,57 @@ Empiezo usando un sistema en particular para analizar y intentar generalizar a o
 
 
 \subsection{Intervenci\'on}
+
+Una operaci\'on importante en las Redes Bayesianas Causales es la operaci\'on de la intervenci\'on. Las consultas que se suelen hacer a las Redes Bayesianas son probabilidades condicionales, de la pinta $P(X=x | Y=y)$, donde el dominio se restringe solo a los casos donde el nodo $Y=y$ para luego mirar la probabilidad de X. 
+
+La intervenci\'on por otro lado, tambi\'en es una consulta probabilistica sobre la red, pero donde se le asigna a cierto nodo un valor con probabilidad 1. La operaci\'on de la intervenci\'on se ve reflejado en una consulta con el operador \textbf{do}. Un ejemplo se ver\'ia de la forma $P(X=x | do(Y=y))$. La diferencia con la consulta anterior se da en que la primera acota el unvierso de datos solo a los que $Y=y$, pero la segunda con intervenci\'on no. Esta consulta mira todos los valores de X, para todos los datos, pero asumiendo que $Y=y$ en todos ellos e ignorando el verdadero valor de Y.
+
+En una Red Causal, la intervenci\'on se puede ver reflejada en una red simplemente sacando las aristas de los padres del nodo intervenido hacia \'el. Si quisiera realizar intervenci\'on en la red del sistema de ejemplo anterior, donde la predicci\'on del modelo 2 de hist\'orias cl\'inicas fuera siempre que la persona pertenece a clase Positiva ($Pred^{M2}=Positive$), el modelo gr\'afico resultante se ver\'ia de la siguiente manera:
+
+\begin{center}
+\begin{tikzpicture}[
+        scale=1, every node/.style={font=\normalfont},
+        fontSize/.style={font=\normalfont}
+    ]
+
+    % Descripcion
+    \node[draw, fill=blue!30, minimum width=9.5cm, minimum height=4.5cm] at (0,5.25) (Sistema) {};
+    \node[font=\huge, right = 0.1cm of Sistema] (Descripcion Sistema) {\textcolor{blue}{\textbf{Sistema}}};
+    
+    % Instancias
+    \node[latent, fontSize, fill=green!10] at (0,10.5) (Persona) {$Persona$};
+    \node[latent, fontSize, double, fill=green!40] at (5,9) (Clase) {$Clase$};
+    
+    % Features
+    \node[latent, fontSize, fill=green!10] at (-2,8.5) (Imagen) {$Imagen$};
+    \node[latent, fontSize, fill=green!10] at (2,8.5) (Historia) {$Historia$};
+    
+    % Modelos
+    \node[latent, fontSize, fill=blue!20] at (-2,6) (Pred M1) {$Pred^{M1}$};
+    \node[latent, fontSize, fill=blue!20] at (2,6) (Pred M2) {$Positive$};
+    \node[latent, fontSize, double, fill=blue!10] at (-3,4) (Conf M1) {$Conf^{M1}$};
+    \node[latent, fontSize, double, fill=blue!10] at (3,4) (Conf M2) {$Conf^{M2}$};
+    
+    % Outputs
+    \node at (0,4) (Fusionador) {\textbf{fusionador}};
+    \node[latent, fontSize, fill=red!20] at (0,2) (Pred S) {$Pred^S$};
+    \node[latent, fontSize, double, fill=red!10] at (0,0) (Conf S) {$Conf^S$};
+
+    % Aristas
+    \draw[->] (Persona) to (Clase);
+    \draw[->] (Persona) to (Imagen);
+    \draw[->] (Persona) to (Historia);
+    \draw[->] (Imagen) to node[left] {\textbf{modelo 1}} (Pred M1);
+    \draw[->] (Historia) to node[right] {\textbf{modelo 2}} (Pred M2);
+    \draw[->] (Pred M1) to (Conf M1);
+    \draw[->] (Pred M2) to (Conf M2);
+    \draw[->] (Pred M1) to (Pred S);
+    \draw[->] (Pred M2) to (Pred S);
+    \draw[->] (Pred S) to (Conf S);
+    \draw[->] (Clase) to[bend left] (Conf M1.east);
+    \draw[->] (Clase.280) to[bend left] (Conf M2.north east);
+    \draw[->] (Clase.south east) to[bend left] (Conf S.east);
+\end{tikzpicture}
+\end{center}
+
+La operaci\'on de invervenci\'on es muy importante para analizar como se comporta el sistema sin necesidad de evaluarlo con un modelo. Se pueden asumir distintos comportamientos sencillos del modelo y analizar el rendimiento del sistema para esos distintos modelos por medio de la intervenci\'on. Luego teniendo la evaluaci\'on real de un posible modelo, mediante alguna funci\'on de costo, asemejar el comportamiento del sistema con el modelo real a los distintos comportamientos observados del sistema con las intervenciones en el modelo. 
