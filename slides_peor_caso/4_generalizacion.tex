@@ -1,0 +1,79 @@
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Se puede observar como para 3 modelos ejemplo con la misma matriz de confusi\'on, se obtienen 3 resultados de sistema distintos. La causa de esto son las instancias con una sola X, sobre las cuales si el modelo predice Positive, el resultado del sistema es un True Positive y si el modelo predice Positive, el resultado del sistema es un False Negative. \\
+\vspace{3mm}
+Ahora se busca saber cual es la cantidad de False Negatives m\'axima y la cantidad de True Positive m\'axima luego de fijar el modelo, y as\'i ajustar la cota anterior.\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Las confusiones del sistema se pueden particionar de la siguiente manera: \\
+\vspace{3mm}
+\begin{itemize}
+\item $\STP$ = $\STPMP$ + $\STPMN$ \\
+\item $\SFN$ = $\SFNMP$ + $\SFNMN$ \\
+\end{itemize}
+\vspace{3mm}
+Con el objetivo de separar en casos por resultado del modelo y acotar ambos casos por separado.
+\end{frame}
+
+
+
+\input{4_1_cotaFallos}
+\input{4_2_cotaAciertos}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+A su vez, el mismo an\'alisis es v\'alido para la clase Negative, llegando a las siguientes cotas: \\
+\vspace{3mm}
+Cota superior a los fallos del sistema, e inferior a los aciertos, dado que se saben las confusiones del modelo: \\
+\vspace{6mm}
+$\SFP$ $\leq$ Min(\MTN, \INFP) + \\
+\vspace{1mm}
+\hspace{11mm}
+Min(\MFP, \IPFP - Min(\MTN, \INFP)) \\
+\vspace{2mm}
+$\STN$ $\geq$ (\MTN - Min(\MTN, \INFP)) + \\
+\vspace{1mm}
+\hspace{11mm}
+(\MFP - Min(\MFP, \IPFP - Min(\MTN, \INFP))) \\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Cota superior a los aciertos del sistema, e inferior a los fallos, dado que se saben las confusiones del modelo:\\
+\vspace{6mm}
+$\SFP$ $\geq$  (\MTN - Min(\MTN, \INTN - Min(\MFP, \IPTN))) + \\
+\vspace{1mm}
+\hspace{11mm}
+(\MFP - Min(\MFP, \IPTN)) \\
+\vspace{2mm}
+$\STN$ $\leq$ Min(\MTN, \INTN - Min(\MFP, \IPTN)) + \\
+\vspace{1mm}
+\hspace{11mm}
+Min(\MFP, \IPTN) \\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Como el objetivo es encontrar el m\'aximo para $\SFN$ y $\SFP$ se toma el valor de esas confusiones igual a sus cotas superiores, y las confusiones $\STP$ y $\STN$ asociadas iguales a sus cotas inferiores. \\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Por \'ultimo, se multiplican cada confusi\'on por su costo asociado para calcular el costo del sistema en su peor caso: \\
+\vspace{6mm}
+$\SPC$ = $\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + \\
+\hspace{29mm}
+$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$ \\
+\end{frame}

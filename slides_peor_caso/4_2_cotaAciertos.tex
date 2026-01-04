@@ -1,0 +1,46 @@
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+La cantidad m\'axima de True Positives ocurre cuando: \\
+\vspace{3mm}
+\begin{itemize}
+\item \STPMP tiene la m\'axima cantidad de instancias con una X posibles. \\
+\item \STPMN tiene la m\'axima cantidad de instancias con doble X posibles. \\
+\end{itemize}
+\vspace{3mm}
+De esta forma todas las instancias con una X que sea posible considerar como True Positives del modelo van a serlo, evitando sus fallos en la clasificaci\'on.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Escribiendo formalmente la cota superior de aciertos para la clase
+Positive: \\
+\vspace{3mm}
+\begin{itemize}
+\item \STPMP = Min(\MTP, \IPTP - Min(\MFN, \INTP)) \\
+% \vspace{3mm}
+% \item $\STNMN$ = Min(\MTN, \INTN - Min(\MFP, \IPTN)) \\
+\vspace{3mm}
+\item \STPMN = Min(\MFN, \INTP) \\
+% \vspace{3mm}
+% \item $\STNFP$ = Min(\MFP, \IPTN) \\
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Definiendo la cota superior a los aciertos del sistema, y superior a los aciertos, dado que se saben las confusiones del modelo: \\
+\vspace{6mm}
+$\STP$ $\leq$ Min(\MTP, \IPTP - Min(\MFN, \INTP)) + \\
+\vspace{1mm}
+\hspace{12.2mm}
+Min(\MFN, \INTP) \\
+\vspace{2mm}
+$\SFN$ $\geq$ (\MTP - Min(\MTP, \IPTP - Min(\MFN, \INTP))) + \\
+\vspace{1mm}
+\hspace{12.2mm}
+(\MFN - Min(\MFN, \INTP)) \\
+\end{frame}

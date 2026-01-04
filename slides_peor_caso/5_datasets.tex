@@ -1,0 +1,15 @@
+\begin{frame}
+\frametitle{Datasets distintos para evaluaci\'on}
+Hasta ahora se trabaj\'o asumiendo que los datos en los que se eval\'uan las intervenci\'ones sobre el sistema, y los datos con los que se eval\'ua el modelo son los mismos, y se logr\'o encontrar una funci\'on de costo de peor caso para el sistema. Originalmente se buscaba conseguir una funci\'on de costo que fuera \'util tambi\'en para casos donde los datos en los que se eval\'ua el sistema intervenido y los datos con los que se eval\'ua el modelo fueran distintos.\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Datasets distintos para evaluaci\'on}
+\begin{itemize}
+    \item La funci\'on de costo de peor caso solo utiliza el accuracy de los resultados del sistema con intervenido. Mientras ese accuracy medido sea el mismo que el accuracy que tendr\'ia el sistema (intervenido) en los datos con los que se eval\'ua el modelo, la funci\'on sigue calculando el peor caso correctamente.\\
+    \vspace{3mm}
+    \item Por ley de los grandes n\'umeros, si la predicci\'on del sistema en una instancia cualquiera es una variable aleatoria iid con media en el accuracy, mientras la cantidad de datos de cada conjunto de evaluaci\'on sea lo suficientemente grande, el accuracy de cada conjunto de evaluaci\'on va a tender a la m\'edia poblacional (accuracy real) y por lo tanto la medici\'on del primer conjunto de datos con intervenci\'on va a ser la misma que el accuracy efectivo para el segundo conjunto de datos.
+\end{itemize}
+\end{frame}
