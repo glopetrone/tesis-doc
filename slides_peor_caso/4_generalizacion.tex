@@ -1,8 +1,15 @@
 \begin{frame}
 \frametitle{An\'alisis de peor caso}
 Se puede observar como para 3 modelos ejemplo con la misma matriz de confusi\'on, se obtienen 3 resultados de sistema distintos. La causa de esto son las instancias con una sola X, sobre las cuales si el modelo predice Positive, el resultado del sistema es un True Positive y si el modelo predice Positive, el resultado del sistema es un False Negative. \\
-\vspace{3mm}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
 Ahora se busca saber cual es la cantidad de False Negatives m\'axima y la cantidad de True Positive m\'axima luego de fijar el modelo, y as\'i ajustar la cota anterior.\\
+\vspace{3mm}
+Particularmente se va a analizar solo la cota superior para False Negative que es la de inter\'es, al brindar el peor caso que se busca.
 \end{frame}
 
 
@@ -21,8 +28,104 @@ Con el objetivo de separar en casos por resultado del modelo y acotar ambos caso
 
 
 
-\input{4_1_cotaFallos}
-\input{4_2_cotaAciertos}
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+La cantidad m\'axima de False Negatives ocurre cuando: \\
+\vspace{3mm}
+\begin{itemize}
+\item $\STPMP$ tiene la m\'axima cantidad de instancias con doble X posibles. \\
+\item $\STPMN$ tiene la m\'axima cantidad de instancias con una X posibles. \\
+\end{itemize}
+\vspace{3mm}
+De esta forma todas las instancias con una X que sea posible considerar como False Negatives del modelo van a serlo.
+\end{frame}
+
+
+
+\begin{frame}
+\vspace{9mm}
+\frametitle{An\'alisis de peor caso}
+Escribiendo formalmente la cota superior de fallos para la clase Positive: \\
+\vspace{6mm}
+\begin{itemize}
+\item $\SFNMP$ = Min(\MTP, \IPFN) \\
+% \vspace{3mm}
+% \item $\SFPMN$ = Min(\MTN, \INFP) \\
+\vspace{3mm}
+\item $\SFNMN$ = Min(\MFN, \INFN - Min(\MTP, \IPFN)) \\
+% \vspace{3mm}
+% \item $\SFPMP$ = Min(\MFP, \IPFP - Min(\MTN, \INFP)) \\
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{An\'alisis de peor caso}
+Definiendo la cota superior a los fallos del sistema, e inferior a los aciertos, dado que se saben las confusiones del modelo: \\
+\vspace{6mm}
+$\STP$ $\geq$ (\MTP - Min(\MTP, \IPFN)) + \\
+\vspace{1mm}
+\hspace{12.2mm}
+(\MFN - Min(\MFN, \INFN - Min(\MTP, \IPFN))) \\
+\vspace{2mm}
+$\SFN$ $\leq$ Min(\MTP, \IPFN) + \\
+\vspace{1mm}
+\hspace{12.2mm}
+Min(\MFN, \INFN - Min(\MTP, \IPFN)) \\
+\end{frame}
+
+
+
+% COTA ACIERTOS
+% \begin{frame}
+% \frametitle{An\'alisis de peor caso}
+% La cantidad m\'axima de True Positives ocurre cuando: \\
+% \vspace{3mm}
+% \begin{itemize}
+% \item \STPMP tiene la m\'axima cantidad de instancias con una X posibles. \\
+% \item \STPMN tiene la m\'axima cantidad de instancias con doble X posibles. \\
+% \end{itemize}
+% \vspace{3mm}
+% De esta forma todas las instancias con una X que sea posible considerar como True Positives del modelo van a serlo, evitando sus fallos en la clasificaci\'on.
+% \end{frame}
+
+
+
+% COTA ACIERTOS
+% \begin{frame}
+% \frametitle{An\'alisis de peor caso}
+% Escribiendo formalmente la cota superior de aciertos para la clase
+% Positive: \\
+% \vspace{3mm}
+% \begin{itemize}
+% \item \STPMP = Min(\MTP, \IPTP - Min(\MFN, \INTP)) \\
+% % \vspace{3mm}
+% % \item $\STNMN$ = Min(\MTN, \INTN - Min(\MFP, \IPTN)) \\
+% \vspace{3mm}
+% \item \STPMN = Min(\MFN, \INTP) \\
+% % \vspace{3mm}
+% % \item $\STNFP$ = Min(\MFP, \IPTN) \\
+% \end{itemize}
+% \end{frame}
+
+
+
+% COTA ACIERTOS
+% \begin{frame}
+% \frametitle{An\'alisis de peor caso}
+% Definiendo la cota superior a los aciertos del sistema, y superior a los aciertos, dado que se saben las confusiones del modelo: \\
+% \vspace{6mm}
+% $\STP$ $\leq$ Min(\MTP, \IPTP - Min(\MFN, \INTP)) + \\
+% \vspace{1mm}
+% \hspace{12.2mm}
+% Min(\MFN, \INTP) \\
+% \vspace{2mm}
+% $\SFN$ $\geq$ (\MTP - Min(\MTP, \IPTP - Min(\MFN, \INTP))) + \\
+% \vspace{1mm}
+% \hspace{12.2mm}
+% (\MFN - Min(\MFN, \INTP)) \\
+% \end{frame}
 
 
 
@@ -45,20 +148,21 @@ $\STN$ $\geq$ (\MTN - Min(\MTN, \INFP)) + \\
 
 
 
-\begin{frame}
-\frametitle{An\'alisis de peor caso}
-Cota superior a los aciertos del sistema, e inferior a los fallos, dado que se saben las confusiones del modelo:\\
-\vspace{6mm}
-$\SFP$ $\geq$  (\MTN - Min(\MTN, \INTN - Min(\MFP, \IPTN))) + \\
-\vspace{1mm}
-\hspace{11mm}
-(\MFP - Min(\MFP, \IPTN)) \\
-\vspace{2mm}
-$\STN$ $\leq$ Min(\MTN, \INTN - Min(\MFP, \IPTN)) + \\
-\vspace{1mm}
-\hspace{11mm}
-Min(\MFP, \IPTN) \\
-\end{frame}
+% COTA ACIERTOS
+% \begin{frame}
+% \frametitle{An\'alisis de peor caso}
+% Cota superior a los aciertos del sistema, e inferior a los fallos, dado que se saben las confusiones del modelo:\\
+% \vspace{6mm}
+% $\SFP$ $\geq$  (\MTN - Min(\MTN, \INTN - Min(\MFP, \IPTN))) + \\
+% \vspace{1mm}
+% \hspace{11mm}
+% (\MFP - Min(\MFP, \IPTN)) \\
+% \vspace{2mm}
+% $\STN$ $\leq$ Min(\MTN, \INTN - Min(\MFP, \IPTN)) + \\
+% \vspace{1mm}
+% \hspace{11mm}
+% Min(\MFP, \IPTN) \\
+% \end{frame}
 
 
 

@@ -1,11 +1,14 @@
-\begin{frame}
+\begin{frame}[t]
 \frametitle{Notaci\'on}
+\vspace{6mm}
 Para definir el problema formalmente se introduce la notaci\'on $m^{f,D}_{ij}$ para denotar un valor de una matriz de confusi\'on: \\
 \vspace{3mm}
+$m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=i \land d_{2}=j\}$$|$ \\
+\vspace{3mm}
 \begin{itemize}
-\item $i$ es la clase real del dato
-\item $j$ es la clase que predice el modelo sobre el dato
-\item $D$ es el dataset utilizado con conjunto de pares $d_1$ instancia, $d_2$ clase real y su valor por defecto que representa todos los datos disponibles es $d$
+\item $i$ es la clase real
+\item $j$ es la clase que predice el modelo f sobre el dato
+\item $D$ es el dataset utilizado, conteniendo un conjunto de pares $d_1$ instancia, $d_2$ clase real y su valor por defecto que representa todos los datos disponibles es $D$
 \item $f$ es el modelo usado y puede valer:\\
 \begin{itemize}
 \item $M$ como el modelo a analizar\\
@@ -17,46 +20,29 @@ Para definir el problema formalmente se introduce la notaci\'on $m^{f,D}_{ij}$ p
 
 
 
-% \begin{frame}
-% \frametitle{Notaci\'on}
-% Algunos ejemplos de valores de confusi\'on y la manera de calcularlos: \\
-% \vspace{3mm}
-% \begin{itemize}
-% \item \MTP = $P(Pred_{M}=P | Clase=P)$ * CantPositive
-% \vspace{2mm}
-% \item \STP = $P(Pred_{S}=P | Clase=P)$ * CantPositive
-% \vspace{2mm}
-% \item {\IPTP = $P(Pred_{S}=P | Clase=P \land do(Pred_M=P))$ * 
-
-% \hspace{15mm} CantPositive}
-% \end{itemize}
-% \end{frame}
-
-
-
 \begin{frame}[t]
-\frametitle{Assumptions}
+\frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema:\\
+Se espera lo siguiente sobre el comportamiento del sistema:\\
 \vspace{4mm}
 
 \begin{itemize}
 
-\item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=0\}$}
+$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 % \vspace{2mm}
-% \item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=1\}$}
+% $\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 % \vspace{2mm}
-% \item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=1\}$}
+% $\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 % \vspace{2mm}
-% \item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=0\}$}
+% $\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 \end{itemize}
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
@@ -65,28 +51,28 @@ $\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
 
 
 \begin{frame}[t]
-\frametitle{Assumptions}
+\frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema:\\
+Se espera lo siguiente sobre el comportamiento del sistema:\\
 \vspace{4mm}
 
 \begin{itemize}
 
-% \item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=0\}$}
+% $\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 \vspace{12.5mm}
-\item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=1\}$}
+$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 % \vspace{2mm}
-% \item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=1\}$}
+% $\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 % \vspace{2mm}
-% \item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-% $\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=0\}$}
+% $\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 \end{itemize}
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
@@ -95,28 +81,28 @@ $\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
 
 
 \begin{frame}[t]
-\frametitle{Assumptions}
+\frametitle{AssEspecificaci\'on del problemaumptions}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema:\\
+Se espera lo siguiente sobre el comportamiento del sistema:\\
 \vspace{4mm}
 
 \begin{itemize}
 
-\item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=0 \land M(I)=0\}$}
+$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 \vspace{2mm}
-\item {$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=0 \land S(I)=1 \land M(I)=1\}$}
+$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 \vspace{2mm}
-\item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=0\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=0\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=1 \land M(I)=1\}$}
+$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \land M(d_{1})=1\}$}
 \vspace{2mm}
-\item {$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=1\}$ $\subseteq$
+\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=1\}$ $\subseteq$
 
-$\{i\in d$ $|$ $ d_{2}=1 \land S(I)=0 \land M(I)=0\}$}
+$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \land M(d_{1})=0\}$}
 \end{itemize}
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Lo mismso para Clase Negative
@@ -125,8 +111,8 @@ $\symbol{92}$$\symbol{92}$ Lo mismso para Clase Negative
 
 
 \begin{frame}
-\frametitle{Assumptions}
-Se asume lo siguiente sobre la funci\'on de costo asociada a las confusiones del sistema:\\
+\frametitle{Especificaci\'on del problema}
+Se espera lo siguiente sobre la funci\'on de costo asociada a las confusiones del sistema:\\
 \vspace{4mm}
 \begin{itemize}
 \item \SCTP $\leq$ \SCFN \\
@@ -221,18 +207,33 @@ Dados esos datos, se busca generar la peor matriz de confusi\'on posible del sis
 \frametitle{Especificaci\'on del problema}
 La peor es la que maximiza: \\
 \vspace{3mm}
-$\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + \\
-$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$ \\
+\begin{itemize}
+\item {$\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + 
+
+$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$}
+\end{itemize}
 \vspace{3mm}
 Como los costos asociados a las confusiones de aciertos son menores a las de fallos, es equivalente a maximizar: \\
-$\SFN$ + $\SFP$ \\
+\vspace{3mm}
+\begin{itemize}
+\item $\SFN$ + $\SFP$
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Cotas independientes al modelo}
+Si se logra acotar de forma exacta las confusiones del sistema, particularmente hallar una cota superior para $\SFN$ y $\SFP$, podemos tomar ese valor m\'aximo como el valor de la confusi\'on en peor caso. \\
+\vspace{3mm}
+Para las confusiones restantes $\STP$ y $\STN$ se toman las instancias restantes de la clase que deberian correspoonder a su cota inferior.
 \end{frame}
 
 
 
 
 \begin{frame}[t]
-\frametitle{Especificaci\'on del problema}
+\frametitle{Cotas independientes al modelo}
 \vspace{6mm}
 Cotas a las confusiones del sistema (independientes al modelo): \\
 \vspace{6mm}
@@ -243,8 +244,8 @@ Cotas a las confusiones del sistema (independientes al modelo): \\
   \item \STN + \SFP = N
 \end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.47\textwidth}
-\vspace{1mm}
+\begin{minipage}[t]{0.46\textwidth}
+\vspace{2mm}
 $\symbol{92}$$\symbol{92}$ Total de instancias por clase
 \end{minipage}
 \end{frame}
@@ -252,7 +253,7 @@ $\symbol{92}$$\symbol{92}$ Total de instancias por clase
 
 
 \begin{frame}[t]
-\frametitle{Especificaci\'on del problema}
+\frametitle{Cotas independientes al modelo}
 \vspace{6mm}
 Cotas a las confusiones del sistema (independientes al modelo): \\
 \vspace{6mm}
@@ -265,7 +266,7 @@ Cotas a las confusiones del sistema (independientes al modelo): \\
   \item \INTP $\leq$ \STP $\leq$ \IPTP
 \end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.47\textwidth}
+\begin{minipage}[t]{0.46\textwidth}
 \vspace{15mm}
 $\symbol{92}$$\symbol{92}$ M\'as aciertos que cuando el modelo falla siempre, menos aciertos que cuando el modelo acierta siempre
 \end{minipage}
@@ -274,7 +275,7 @@ $\symbol{92}$$\symbol{92}$ M\'as aciertos que cuando el modelo falla siempre, me
 
 
 \begin{frame}[t]
-\frametitle{Especificaci\'on del problema}
+\frametitle{Cotas independientes al modelo}
 \vspace{6mm}
 Cotas a las confusiones del sistema (independientes al modelo): \\
 \vspace{6mm}
@@ -288,8 +289,8 @@ Cotas a las confusiones del sistema (independientes al modelo): \\
   \item \IPFN $\leq$ \SFN $\leq$ \INFN
 \end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.47\textwidth}
-\vspace{15mm}
+\begin{minipage}[t]{0.46\textwidth}
+\vspace{24mm}
 $\symbol{92}$$\symbol{92}$ M\'as fallos que cuando el modelo acierta siempre, menos fallos que cuando el modelo falla siempre
 \end{minipage}
 \end{frame}
@@ -297,7 +298,7 @@ $\symbol{92}$$\symbol{92}$ M\'as fallos que cuando el modelo acierta siempre, me
 
 
 \begin{frame}[t]
-\frametitle{Especificaci\'on del problema}
+\frametitle{Cotas independientes al modelo}
 \vspace{6mm}
 Cotas a las confusiones del sistema (independientes al modelo): \\
 \vspace{6mm}
@@ -314,7 +315,7 @@ Cotas a las confusiones del sistema (independientes al modelo): \\
   \item \IPTN $\leq$ \STN $\leq$ \INTN
 \end{itemize}
 \end{minipage}
-\begin{minipage}[t]{0.47\textwidth}
+\begin{minipage}[t]{0.46\textwidth}
 \vspace{30mm}
 $\symbol{92}$$\symbol{92}$ Lo mismo para la clase Negative
 \end{minipage}
@@ -323,8 +324,8 @@ $\symbol{92}$$\symbol{92}$ Lo mismo para la clase Negative
 
 
 \begin{frame}
-\frametitle{Especificaci\'on del problema}
-Hasta ahora se tiene un rango que acota superior e inferiormente a cada confusi\'on del sistema. Este rango es independiente del modelo. Ahora falta usar los resultados de las confusiones del modelo para poder acotar de forma m\'as ajustada. \\
+\frametitle{Cotas independientes al modelo}
+Hasta ahora se tienen unos valores que acotan superior e inferiormente a cada confusi\'on del sistema. Este rango es independiente del modelo y potencialmente muy laxo. \\
 \vspace{3mm}
-Para eso se va a analizar de forma m\'as cercana los posibles resultados de las instancias en base a las assumptions.
+A continuacion se va a analizar de forma m\'as cercana los posibles resultados de las instancias en base a lo que se sabe del modelo y del comportamiento del sistema para poder acotar de forma m\'as ajustada. 
 \end{frame}

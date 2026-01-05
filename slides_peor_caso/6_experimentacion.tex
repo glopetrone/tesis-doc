@@ -51,9 +51,12 @@ Al ver esto se corrieron dos experimentos distintos:\\
 \vspace{3mm}
 Uno simulando un modelo con valores fijos de precision en ambos modelos y con una relaci\'on entre los resultados del modelo y del sistema bastante desfavorable. Su objetivo es analizar la probabilidad de que la estimaci\'on del peor caso de la funci\'on de costo sea realmente peor que la ejecuci\'on del sistema real y como esta probabilidad se comporta al cambiar la cantidad de instancias de testing de ambas fases del experimento.\\
 \vspace{3mm}
-P($\SPC$ $>$ $\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + \\
+\begin{itemize}
+\item {P($\SPC$ $>$ $\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + 
+
 \hspace{33mm}
-$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$)\\
+$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$)}
+\end{itemize}
 \end{frame}
 
 
@@ -64,8 +67,7 @@ El otro simulando un sistema con precisiones de ambos modelos y con una interacc
 \vspace{3mm}
 {\fontsize{15}{15}\selectfont
 \begin{itemize}
-\item $\frac{\SCTP * \STP + \SCFN * \SFN}{costoPeorCaso^M_P}$
-\item $\frac{\SCTN * \STN + \SCFP * \SFP}{costoPeorCaso^M_N}$
+\item $\frac{\SCTP * \STP + \SCFN * \SFN + \SCTN * \STN + \SCFP * \SFP}{\SPC}$
 \end{itemize}
 }
 \end{frame}

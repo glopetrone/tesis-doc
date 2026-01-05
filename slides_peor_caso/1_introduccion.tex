@@ -161,16 +161,16 @@ La forma que se va a utilizar para modelar el problema es mediante una red bayes
 \node at (0,3.5) (Fusionador) {\textbf{fusionador}};
 \node[font=\large] at (-5.5,5) (Descripcion Sistema) {\color{blue} \underline{Sistema}};
 % Aristas
-\edge[->] {Persona} {Clase};
-\edge[->] {Persona} {Imagen};
-\edge[->] {Persona} {Historia};
+\draw[->] (Persona) to (Clase);
+\draw[->] (Persona) to (Imagen);
+\draw[->] (Persona) to (Historia);
 \draw[->] (Imagen) to node[left] {\textbf{modelo 1}} (Pred M1);
 \draw[->] (Historia) to node[right] {\textbf{modelo 2}} (Pred M2);
-\edge[->] {Pred M1} {Conf M1};
-\edge[->] {Pred M2} {Conf M2};
-\edge[->] {Pred M1} {Pred S};
-\edge[->] {Pred M2} {Pred S};
-\edge[->] {Pred S} {Conf S};
+\draw[->] (Pred M1) to (Conf M1);
+\draw[->] (Pred M2) to (Conf M2);
+\draw[->] (Pred M1) to (Pred S);
+\draw[->] (Pred M2) to (Pred S);
+\draw[->] (Pred S) to (Conf S);
 \draw[->] (Clase) to[bend left] (Conf M1.east);
 \draw[->] (Clase.280) to[bend left] (Conf M2.north east);
 \draw[->] (Clase.south east) to[bend left] (Conf S.east);
@@ -202,7 +202,7 @@ Un ejemplo del operador \textbf{do}:\\
 \begin{tikzpicture}
 \node[latent] at (0,0.75) (nodeX) {$X$};
 \node[latent] at (0,-0.75) (nodeY) {$Y$};
-\edge {nodeX} {nodeY};
+\draw[->] (nodeX) to (nodeY);
 \end{tikzpicture}
 \end{center}
 \end{minipage}
