@@ -1,0 +1,242 @@
+\begin{frame}
+\frametitle{Podar espacio}
+Ahora se busca descartar subconjuntos de resultados del sistema que tengan menos False Negatives que otros. \\
+\vspace{3mm}
+El objetivo es encontrar dentro del espacio de b\'usqueda, con combinaci\'ones de resultados del sistema para las instancias en una ejecuci\'on del modelo particular, la peor combinaci\'on o una dentro de las peores.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio}
+Las confusiones del sistema se pueden particionar de la siguiente manera: \\
+\vspace{3mm}
+\begin{itemize}
+\item $\STP$ = $\STPMP$ + $\STPMN$ \\
+\item $\SFN$ = $\SFNMP$ + $\SFNMN$ \\
+\end{itemize}
+\vspace{3mm}
+Con el objetivo de separar en casos por resultado del modelo y reducir el espacio de busqueda analizando casos donde el modelo acierta y el modelo falla por separado.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Primero, analizando solo las instancias que fueron aciertos en el modelo, se descartan resultados donde la cantidad de errores no sea m\'axima. Las instancias que generan Falsos Negativos cuando el modelo acierta son las que en los ejemplos anteriores tienen doble X. Se quiere tener la cantidad m\'axima posible de esas como aciertos del modelo.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Ejemplos de casos descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 & X & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive descartado 1}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Ejemplos de casos descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 & X & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 & X & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive descartado 2}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Ejemplos de casos NO descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive no descartado 1}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Ejemplos de casos NO descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive no descartado 2}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Aciertos}
+Si una de estas instancias con doble X considerada como acierto fuera en cambio un fallo, tiene que cambiar de lugar con otra para conservar la cantidad de X adecuada. Esa otra puede ser otra doble X, una sola o ninguna. En todos los casos la cantidad de fallos del sistema es igual o menor a la original. \\
+\vspace{3mm}
+La confusi\'on resultante de fallos en el sistema sobre la clase Positive para estos casos donde el modelo acierta es \'unica y es la siguiente:
+\vspace{6mm}
+\begin{itemize}
+\item $\SFNMP$ = Min(\MTP, \IPFN) \\
+% \vspace{3mm}
+% \item $\SFPMN$ = Min(\MTN, \INFP) \\
+% \vspace{3mm}
+% \item $\SFNMN$ = Min(\MFN, \INFN - Min(\MTP, \IPFN)) \\
+% \vspace{3mm}
+% \item $\SFPMP$ = Min(\MFP, \IPFP - Min(\MTN, \INFP)) \\
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Fallos}
+Luego queda analizar los fallos. Las instancias con una X provocan un fallo en el sistema \textbf{solo} si el modelo falla, por lo que se busca que sea m\'axima. La poda descarta los casos en los que la cantidad de instancias con X \'unica no sea m\'axima para los fallos del modelo. 
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Fallos}
+Ejemplos de casos descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive descartado}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Fallos}
+Ejemplos de casos NO descartados: \\
+\vspace{3mm}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive NO descartado}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Fallos}
+Si una de estas instancias con X \'unica considerada como fallo fuera en cambio un acierto, tiene que cambiar de lugar con otra. Esa otra puede ser una doble X, una X \'unica o ninguna X. En todos los casos, la cantidad de fallos del sistema es igual o menor a la original. \\
+\vspace{3mm}
+La confusion resultante de fallos en el sistema sobre la clase Positive para estos casos donde el modelo falla es \'unica y es la siguiente:
+\vspace{6mm}
+\begin{itemize}
+% \item $\SFNMP$ = Min(\MTP, \IPFN) \\
+% \vspace{3mm}
+% \item $\SFPMN$ = Min(\MTN, \INFP) \\
+% \vspace{3mm}
+\item $\SFNMN$ = Min(\MFN, \INFN - Min(\MTP, \IPFN)) \\
+% \vspace{3mm}
+% \item $\SFPMP$ = Min(\MFP, \IPFP - Min(\MTN, \INFP)) \\
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Podar espacio: Clase Negative}
+El mismo an\'alisis y las mismas podas se pueden hacer para la clase negative. Las confusiones resultantes ser\'ian las siguientes:
+\vspace{6mm}
+\begin{itemize}
+% \item $\SFNMP$ = Min(\MTP, \IPFN) \\
+% \vspace{3mm}
+\item $\SFPMN$ = Min(\MTN, \INFP) \\
+% \vspace{3mm}
+% \item $\SFNMN$ = Min(\MFN, \INFN - Min(\MTP, \IPFN)) \\
+\vspace{3mm}
+\item $\SFPMP$ = Min(\MFP, \IPFP - Min(\MTN, \INFP)) \\
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Confusiones resultantes}
+Las confusiones finales del sistema sobre todos los datos son: \\
+\vspace{6mm}
+\begin{itemize}
+\item {$\SFN$ = Min(\MTP, \IPFN) + 
+
+\hspace{12.5mm}
+Min(\MFN, \INFN - Min(\MTP, \IPFN))}
+\item $\STP$ = Instancias restantes de clase Positive
+\vspace{3mm}
+\item $\SFP$ = {Min(\MTN, \INFP) + 
+
+\hspace{12.5mm}
+Min(\MFP, \IPFP - Min(\MTN, \INFP))}
+\item $\STN$ = Instancias restantes de clase Negative
+\end{itemize}
+\end{frame}

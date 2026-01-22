@@ -1,0 +1,344 @@
+\begin{frame}[t]
+\frametitle{Notaci\'on}
+\vspace{6mm}
+Para definir el problema formalmente se introduce la notaci\'on $m^{f,D}_{ij}$ para denotar un valor de una matriz de confusi\'on: \\
+\vspace{3mm}
+$m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=i \land d_{2}=j\}$$|$ \\
+\vspace{3mm}
+\begin{itemize}
+\item $i$ es la clase real
+\item $j$ es la clase que predice el modelo f sobre el dato
+\item $D$ es el dataset utilizado, conteniendo un conjunto de pares $d_1$ instancia, $d_2$ clase real asociada, y su valor por defecto que representa todos los datos disponibles es $D$
+\item $f$ es el modelo usado y puede valer:\\
+\begin{itemize}
+\item $M$ como el modelo a analizar\\
+\item $S$ como el sistema completo con el modelo\\
+\item $S_{*\rightarrow x}$ como el sistema con un modelo intervenido que predice de forma constante la clase $x$ para cualquier instancia\\
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Especificaci\'on del problema}
+\vspace{6mm}
+Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+\vspace{4mm}
+
+\begin{itemize}
+
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+% \vspace{2mm}
+% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+% \vspace{2mm}
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+% \vspace{2mm}
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{4mm}
+$\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Especificaci\'on del problema}
+\vspace{6mm}
+Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+\vspace{4mm}
+
+\begin{itemize}
+
+% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\vspace{12.5mm}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+% \vspace{2mm}
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+% \vspace{2mm}
+% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
+
+% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{4mm}
+$\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Especificaci\'on del problema}
+\vspace{6mm}
+Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+\vspace{4mm}
+
+\begin{itemize}
+
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\vspace{2mm}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+\vspace{2mm}
+\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+\vspace{2mm}
+\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{4mm}
+$\symbol{92}$$\symbol{92}$ Lo mismso para Clase Negative
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Especificaci\'on del problema}
+Se espera lo siguiente sobre la funci\'on de costo asociada a las confusiones del sistema:\\
+\vspace{4mm}
+\begin{itemize}
+\item \SCTP $\leq$ \SCFN \\
+\vspace{2mm}
+\item \SCTN $\leq$ \SCFP \\
+\end{itemize}
+\vspace{4mm}
+Los fallos tienen mayor costo que los aciertos.\\
+\vspace{4mm}
+Para este trabajo se va a asumir que los aciertos tienen costo 1 y los fallos costo 0.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Especificaci\'on del problema}
+Datos disponibles:
+\begin{table}[]
+    \begin{minipage}{0.62\textwidth}
+        \begin{tabular}{c|c|c|}
+            & Pred Pos & Pred Neg \\ \hline
+            Clase Pos & \IPTP & \IPFN \\ \hline
+            Clase Neg & \IPFP & \IPTN \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.34\textwidth}
+        \caption{Matriz de confusi\'on del sistema si Modelo = Positive}
+    \end{minipage}
+\end{table}
+\begin{table}[]
+    \begin{minipage}{0.62\textwidth}
+        \begin{tabular}{c|c|c|}
+            & Pred Pos & Pred Neg \\ \hline
+            Clase Pos & \INTP & \INFN \\ \hline
+            Clase Neg & \INFP & \INTN \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.34\textwidth}
+        \caption{Matriz de confusi\'on del sistema si Modelo = Negative}
+    \end{minipage}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Especificaci\'on del problema}
+Otros datos disponibles: \\
+\vspace{3mm}
+\begin{table}[]
+    \begin{minipage}{0.60\textwidth}
+        \begin{tabular}{c|c|c|}
+            & Positive & Negative \\ \hline
+            \#Instancias & P & N \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.38\textwidth}
+        \caption{Cantidad de instancias por clase}
+    \end{minipage}
+\end{table}
+\begin{table}[]
+    \begin{minipage}{0.60\textwidth}
+        \begin{tabular}{c|c|c|}
+            & Pred Pos & Pred Neg \\ \hline
+            Clase Pos & \MTP & \MFN \\ \hline
+            Clase Neg & \MFP & \MTN \\ \hline
+        \end{tabular}
+    \end{minipage}
+    \begin{minipage}{0.38\textwidth}
+        \caption{Matriz de confusi\'on del modelo}
+    \end{minipage}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Especificaci\'on del problema}
+Dados esos datos, se busca generar la peor matriz de confusi\'on posible del sistema que sea v\'alida (peor caso).
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Prediccion Positive & Prediccion Negative \\ \hline
+        Clase Positive & \STP & \SFN \\ \hline
+        Clase Negative & \SFP & \STN \\ \hline
+    \end{tabular}
+    \caption{Matriz de confusi\'on del sistema}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Especificaci\'on del problema}
+La peor es la que maximiza: \\
+\vspace{3mm}
+\begin{itemize}
+\item {$\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + 
+
+$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$}
+\end{itemize}
+\vspace{3mm}
+Como los costos asociados a las confusiones de aciertos valen 1 y las de los fallos 0, es equivalente a maximizar: \\
+\vspace{3mm}
+\begin{itemize}
+\item $\SFN$ + $\SFP$
+\end{itemize}
+\vspace{3mm}
+El an\'alisis tambi\'en vale para otros casos.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Planteo inicial}
+El problema se va a trabajar como un problema de b\'usqueda. \\
+\vspace{3mm}
+\begin{itemize}
+\item El espacio de b\'usqueda van a ser todas las posibles combinaciones de resultados de clasificaci\'on en el sistema sobre las instancias disponibles.
+\item El objetivo va a ser hallar los conjuntos de resultados donde la cantidad de fallos sea m\'axima y se cumpla la especificaci\'on planteada
+\end{itemize}
+\end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{Cotas independientes al modelo}
+% Primero se va a acotar el espacio de b\'usqueda con informaci\'on \'unicamente de las intervenciones, descartando espacios inalcanzables.
+% \end{frame}
+
+
+
+% \begin{frame}[t]
+% \frametitle{Cotas independientes al modelo}
+% \vspace{6mm}
+% Cotas a las confusiones del sistema (independientes al modelo): \\
+% \vspace{6mm}
+% \begin{minipage}[t]{0.5\textwidth}
+% \begin{itemize}
+%   \setcounter{enumi}{0}
+%   \item \STP + \SFN = P
+%   \item \STN + \SFP = N
+% \end{itemize}
+% \end{minipage}
+% \begin{minipage}[t]{0.46\textwidth}
+% \vspace{2mm}
+% $\symbol{92}$$\symbol{92}$ Total de instancias por clase
+% \end{minipage}
+% \end{frame}
+
+
+
+% \begin{frame}[t]
+% \frametitle{Cotas independientes al modelo}
+% \vspace{6mm}
+% Cotas a las confusiones del sistema (independientes al modelo): \\
+% \vspace{6mm}
+% \begin{minipage}[t]{0.5\textwidth}
+% \begin{itemize}
+%   \setcounter{enumi}{0}
+%   \item \STP + \SFN = P
+%   \item \STN + \SFP = N
+%   \vspace{3mm}
+%   \item \INTP $\leq$ \STP $\leq$ \IPTP
+% \end{itemize}
+% \end{minipage}
+% \begin{minipage}[t]{0.46\textwidth}
+% \vspace{17mm}
+% $\symbol{92}$$\symbol{92}$ M\'as aciertos que cuando el modelo falla siempre, menos aciertos que cuando el modelo acierta siempre
+% \end{minipage}
+% \end{frame}
+
+
+
+% \begin{frame}[t]
+% \frametitle{Cotas independientes al modelo}
+% \vspace{6mm}
+% Cotas a las confusiones del sistema (independientes al modelo): \\
+% \vspace{6mm}
+% \begin{minipage}[t]{0.5\textwidth}
+% \begin{itemize}
+%   \setcounter{enumi}{0}
+%   \item \STP + \SFN = P
+%   \item \STN + \SFP = N
+%   \vspace{3mm}
+%   \item \INTP $\leq$ \STP $\leq$ \IPTP
+%   \item \IPFN $\leq$ \SFN $\leq$ \INFN
+% \end{itemize}
+% \end{minipage}
+% \begin{minipage}[t]{0.46\textwidth}
+% \vspace{24mm}
+% $\symbol{92}$$\symbol{92}$ M\'as fallos que cuando el modelo acierta siempre, menos fallos que cuando el modelo falla siempre
+% \end{minipage}
+% \end{frame}
+
+
+
+% \begin{frame}[t]
+% \frametitle{Cotas independientes al modelo}
+% \vspace{6mm}
+% Cotas a las confusiones del sistema (independientes al modelo): \\
+% \vspace{6mm}
+% \begin{minipage}[t]{0.5\textwidth}
+% \begin{itemize}
+%   \setcounter{enumi}{0}
+%   \item \STP + \SFN = P
+%   \item \STN + \SFP = N
+%   \vspace{3mm}
+%   \item \INTP $\leq$ \STP $\leq$ \IPTP
+%   \item \IPFN $\leq$ \SFN $\leq$ \INFN
+%   \vspace{3mm}
+%   \item \INFP $\leq$ \SFP $\leq$ \IPFP
+%   \item \IPTN $\leq$ \STN $\leq$ \INTN
+% \end{itemize}
+% \end{minipage}
+% \begin{minipage}[t]{0.46\textwidth}
+% \vspace{34mm}
+% $\symbol{92}$$\symbol{92}$ Lo mismo para la clase Negative
+% \end{minipage}
+% \end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{Cotas independientes al modelo}
+% Hasta ahora se tienen unos valores que acotan superior e inferiormente a cada confusi\'on del sistema. Este rango es independiente del modelo y potencialmente muy laxo. \\
+% \vspace{3mm}
+% Ahora dentro del espacio resultante, teniendo en cuenta el modelo, se van a descartar casos donde se pueda ver que no son los peores y existan otros con mas fallos. Para lograr esto se va a analizar de forma m\'as cercana los comportamientos posibles de las instancias.
+% \end{frame}

@@ -1,0 +1,245 @@
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Para lograr esto se va a analizar de forma m\'as cercana los comportamientos posibles de las instancias. \\
+\vspace{3mm}
+La siguiente tabla tiene los posibles casos en los que se puede encontrar una instancia con respecto al resultado del sistema en ella en base al resultado del modelo. Se marca con una X los casos donde dado cierto resultado del modelo, el sistema falla para esa instancia.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Recordando la assumption 2 de la clase Positive:\\
+\vspace{3mm}
+\begin{itemize}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|c|}
+        & \CIP & \CIN & Es V\'alido \\ \hline
+                            Instancia 1 &   &   &    \\ \hline
+                            Instancia 2 & X &   &    \\ \hline
+                            Instancia 3 &   & X &    \\ \hline
+                            Instancia 4 & X & X &    \\ \hline
+    \end{tabular}
+    \caption{Resultados posibles en instancias de clase Positive}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Recordando la assumption 2 de la clase Positive:\\
+\vspace{3mm}
+\begin{itemize}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|c|}
+        & \CIP & \CIN & Es V\'alido \\ \hline
+        \rowcolor{green!30} Instancia 1 &   &   & SI \\ \hline
+                            Instancia 2 & X &   &    \\ \hline
+                            Instancia 3 &   & X &    \\ \hline
+                            Instancia 4 & X & X &    \\ \hline
+    \end{tabular}
+    \caption{Resultados posibles en instancias de clase Positive}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Recordando la assumption 2 de la clase Positive:\\
+\vspace{3mm}
+\begin{itemize}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|c|}
+        & \CIP & \CIN & Es V\'alido \\ \hline
+                            Instancia 1 &   &   & SI \\ \hline
+        \rowcolor{red!30}   Instancia 2 & X &   & NO \\ \hline
+                            Instancia 3 &   & X &    \\ \hline
+                            Instancia 4 & X & X &    \\ \hline
+    \end{tabular}
+    \caption{Resultados posibles en instancias de clase Positive}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Recordando la assumption 2 de la clase Positive:\\
+\vspace{3mm}
+\begin{itemize}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|c|}
+        & \CIP & \CIN & Es V\'alido \\ \hline
+                            Instancia 1 &   &   & SI \\ \hline
+                            Instancia 2 & X &   & NO \\ \hline
+        \rowcolor{green!30} Instancia 3 &   & X & SI \\ \hline
+                            Instancia 4 & X & X &    \\ \hline
+    \end{tabular}
+    \caption{Resultados posibles en instancias de clase Positive}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Comportamiento de instancias}
+Recordando la assumption 2 de la clase Positive:\\
+\vspace{3mm}
+\begin{itemize}
+\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
+
+$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\end{itemize}
+\vspace{3mm}
+\begin{table}[]
+    \begin{tabular}{c|c|c|c|}
+        & \CIP & \CIN & Es V\'alido \\ \hline
+                            Instancia 1 &   &   & SI \\ \hline
+                            Instancia 2 & X &   & NO \\ \hline
+                            Instancia 3 &   & X & SI \\ \hline
+        \rowcolor{green!30} Instancia 4 & X & X & SI \\ \hline
+    \end{tabular}
+    \caption{Resultados posibles en instancias de clase Positive}
+\end{table}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+El conjunto de resultados posibles sobre las instancias tiene las combinaciones de estos 3 resultados posibles para cada instancia (ninguna X, una X o dos X). \\
+\vspace{3mm}
+A su vez, la cantidad total de X (fallas) por columna son los valores calculados con la intervenci\'on (\IPFN y \INFN). Como estos valores fueron calculados y son conocidos, en el conjunto original se descartan todos los casos donde la cantidad de X por columna no sea la adecuada.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+Ahora sabiendo de que formas se pueden comportar las instancias, se observar\'an distintas posibles combinaciones de confusiones del sistema para las instancias de clase Positive, usando los resultados del modelo. \\
+\vspace{3mm}
+Al usar la confusi\'on del modelo se fijan la cantidad de predicci\'ones Positive y Negative, pero hay muchas combinaciones de reusltados del modelo sobre las instancias que llevan a la misma matriz confusi\'on. Estas variaciones pueden llevan a confusiones del sistema muy distintas entre s\'i. \\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive 1}
+\end{table}
+\vspace{3mm}
+\centering{Cantidad de True Positives totales: 3}\\
+\centering{Cantidad de False Negatives totales: 5}\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50} X & X & X \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 8 &   & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive 2}
+\end{table}
+\vspace{3mm}
+\centering{Cantidad de True Positives totales: 4}\\
+\centering{Cantidad de False Negatives totales: 4}\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50}   &   &   \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 & X & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive 3}
+\end{table}
+\vspace{3mm}
+\centering{Cantidad de True Positives totales: 5}\\
+\centering{Cantidad de False Negatives totales: 3}\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+\begin{table}[t]
+    \begin{tabular}{c|C{1.5cm}|C{1.5cm}|C{1.5cm}|}
+        & \CIP & \CIN & \CS \\ \hline
+        \rowcolor{green!25} Instancia 1 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 2 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 3 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{green!25} Instancia 4 & \cellcolor{green!50}   & X &   \\ \hline
+        \rowcolor{red!25}   Instancia 5 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 6 &   & \cellcolor{red!50}   X & X \\ \hline
+        \rowcolor{red!25}   Instancia 7 &   & \cellcolor{red!50}     &   \\ \hline
+        \rowcolor{red!25}   Instancia 8 & X & \cellcolor{red!50}   X & X \\ \hline
+    \end{tabular}
+    \caption{Ejemplo Clase Positive 4}
+\end{table}
+\vspace{3mm}
+\centering{Cantidad de True Positives totales: 6}\\
+\centering{Cantidad de False Negatives totales: 2}\\
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplos de resultados}
+Se puede observar como para 4 modelos ejemplo con la misma matriz de confusi\'on, se obtienen 4 resultados distintos en el sistema. \\
+\vspace{3mm}
+La causa de esto son las instancias con una sola X. Sobre esas instancias, si el modelo predice Positive, el resultado del sistema es un True Positive y si el modelo predice Negative, el resultado del sistema es un False Negative. \\
+\end{frame}
