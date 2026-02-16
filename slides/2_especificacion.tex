@@ -1,3 +1,17 @@
+\begin{frame}
+\frametitle{Problema 1}
+El primer problema a resolver entonces va a ser encontrar una funci\'on de costo para el modelo con las siguientes condiciones: \\
+\vspace{3mm}
+\begin{itemize}
+\item La funci\'on devuelve el peor caso del sistema dado que fuera ejecutado con el modelo
+\item Se tiene el resultado de ejecutar el sistema con intervenci\'on Positive y Negative en el modelo
+\item Los datasets para evaluar el modelo y el sistema son el mismo
+\end{itemize}
+\end{frame}
+
+
+
+
 \begin{frame}[t]
 \frametitle{Notaci\'on}
 \vspace{6mm}
@@ -23,27 +37,13 @@ $m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=i \land d_{2}=j\}$$|$ \\
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
 \vspace{4mm}
-
+\begin{minipage}{0.6\textwidth}
 \begin{itemize}
-
-\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
-% \vspace{2mm}
-% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
-% \vspace{2mm}
-% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
-% \vspace{2mm}
-% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\item \APmenos
 \end{itemize}
+\end{minipage} \\
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
 \end{frame}
@@ -53,27 +53,14 @@ $\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
 \vspace{4mm}
-
+\begin{minipage}{0.6\textwidth}
 \begin{itemize}
-
-% \item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
 \vspace{12.5mm}
-\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
-% \vspace{2mm}
-% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
-% \vspace{2mm}
-% \item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
-
-% $\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\item \APmenos
 \end{itemize}
+\end{minipage} \\
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
 \end{frame}
@@ -83,27 +70,19 @@ $\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se espera lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$:\\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
 \vspace{4mm}
-
+\begin{minipage}{0.6\textwidth}
 \begin{itemize}
-
-\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=0 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\item \APmas
 \vspace{2mm}
-\item {$\{d\in D$ $|$ $ d_{2}=0 \land S(d_{1})=1 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=0 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+\item \APmenos
 \vspace{2mm}
-\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=1 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow n}(d_{1})=1 \}$}
+\item \ANmas
 \vspace{2mm}
-\item {$\{d\in D$ $|$ $ d_{2}=1 \land S(d_{1})=0 \}$ $\subseteq$
-
-$\{d\in D$ $|$ $ d_{2}=1 \land S_{*\rightarrow p}(d_{1})=0 \}$}
+\item \ANmenos
 \end{itemize}
+\end{minipage} \\
 \vspace{4mm}
 $\symbol{92}$$\symbol{92}$ Lo mismso para Clase Negative
 \end{frame}
@@ -223,122 +202,3 @@ Como los costos asociados a las confusiones de aciertos valen 1 y las de los fal
 \vspace{3mm}
 El an\'alisis tambi\'en vale para otros casos.
 \end{frame}
-
-
-
-\begin{frame}
-\frametitle{Planteo inicial}
-El problema se va a trabajar como un problema de b\'usqueda. \\
-\vspace{3mm}
-\begin{itemize}
-\item El espacio de b\'usqueda van a ser todas las posibles combinaciones de resultados de clasificaci\'on en el sistema sobre las instancias disponibles.
-\item El objetivo va a ser hallar los conjuntos de resultados donde la cantidad de fallos sea m\'axima y se cumpla la especificaci\'on planteada
-\end{itemize}
-\end{frame}
-
-
-
-% \begin{frame}
-% \frametitle{Cotas independientes al modelo}
-% Primero se va a acotar el espacio de b\'usqueda con informaci\'on \'unicamente de las intervenciones, descartando espacios inalcanzables.
-% \end{frame}
-
-
-
-% \begin{frame}[t]
-% \frametitle{Cotas independientes al modelo}
-% \vspace{6mm}
-% Cotas a las confusiones del sistema (independientes al modelo): \\
-% \vspace{6mm}
-% \begin{minipage}[t]{0.5\textwidth}
-% \begin{itemize}
-%   \setcounter{enumi}{0}
-%   \item \STP + \SFN = P
-%   \item \STN + \SFP = N
-% \end{itemize}
-% \end{minipage}
-% \begin{minipage}[t]{0.46\textwidth}
-% \vspace{2mm}
-% $\symbol{92}$$\symbol{92}$ Total de instancias por clase
-% \end{minipage}
-% \end{frame}
-
-
-
-% \begin{frame}[t]
-% \frametitle{Cotas independientes al modelo}
-% \vspace{6mm}
-% Cotas a las confusiones del sistema (independientes al modelo): \\
-% \vspace{6mm}
-% \begin{minipage}[t]{0.5\textwidth}
-% \begin{itemize}
-%   \setcounter{enumi}{0}
-%   \item \STP + \SFN = P
-%   \item \STN + \SFP = N
-%   \vspace{3mm}
-%   \item \INTP $\leq$ \STP $\leq$ \IPTP
-% \end{itemize}
-% \end{minipage}
-% \begin{minipage}[t]{0.46\textwidth}
-% \vspace{17mm}
-% $\symbol{92}$$\symbol{92}$ M\'as aciertos que cuando el modelo falla siempre, menos aciertos que cuando el modelo acierta siempre
-% \end{minipage}
-% \end{frame}
-
-
-
-% \begin{frame}[t]
-% \frametitle{Cotas independientes al modelo}
-% \vspace{6mm}
-% Cotas a las confusiones del sistema (independientes al modelo): \\
-% \vspace{6mm}
-% \begin{minipage}[t]{0.5\textwidth}
-% \begin{itemize}
-%   \setcounter{enumi}{0}
-%   \item \STP + \SFN = P
-%   \item \STN + \SFP = N
-%   \vspace{3mm}
-%   \item \INTP $\leq$ \STP $\leq$ \IPTP
-%   \item \IPFN $\leq$ \SFN $\leq$ \INFN
-% \end{itemize}
-% \end{minipage}
-% \begin{minipage}[t]{0.46\textwidth}
-% \vspace{24mm}
-% $\symbol{92}$$\symbol{92}$ M\'as fallos que cuando el modelo acierta siempre, menos fallos que cuando el modelo falla siempre
-% \end{minipage}
-% \end{frame}
-
-
-
-% \begin{frame}[t]
-% \frametitle{Cotas independientes al modelo}
-% \vspace{6mm}
-% Cotas a las confusiones del sistema (independientes al modelo): \\
-% \vspace{6mm}
-% \begin{minipage}[t]{0.5\textwidth}
-% \begin{itemize}
-%   \setcounter{enumi}{0}
-%   \item \STP + \SFN = P
-%   \item \STN + \SFP = N
-%   \vspace{3mm}
-%   \item \INTP $\leq$ \STP $\leq$ \IPTP
-%   \item \IPFN $\leq$ \SFN $\leq$ \INFN
-%   \vspace{3mm}
-%   \item \INFP $\leq$ \SFP $\leq$ \IPFP
-%   \item \IPTN $\leq$ \STN $\leq$ \INTN
-% \end{itemize}
-% \end{minipage}
-% \begin{minipage}[t]{0.46\textwidth}
-% \vspace{34mm}
-% $\symbol{92}$$\symbol{92}$ Lo mismo para la clase Negative
-% \end{minipage}
-% \end{frame}
-
-
-
-% \begin{frame}
-% \frametitle{Cotas independientes al modelo}
-% Hasta ahora se tienen unos valores que acotan superior e inferiormente a cada confusi\'on del sistema. Este rango es independiente del modelo y potencialmente muy laxo. \\
-% \vspace{3mm}
-% Ahora dentro del espacio resultante, teniendo en cuenta el modelo, se van a descartar casos donde se pueda ver que no son los peores y existan otros con mas fallos. Para lograr esto se va a analizar de forma m\'as cercana los comportamientos posibles de las instancias.
-% \end{frame}

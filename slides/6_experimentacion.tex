@@ -1,73 +1,104 @@
 \begin{frame}
 \frametitle{Experimentaci\'on}
-Se evalu\'o la funci\'on de costo para el modelo ejemplo anterior, donde el sistema recibe como entrada im\'agenes para el modelo 1 y hist\'oria cl\'inica para el modelo 2. Luego un fusionador recibe los resultados de clasificaci\'on de ambos modelos y en base a alguna operaci\'on l\'ogica determina el resultado final del sistema (OR o AND).\\
-Este sistema fue simulado con variables aleatorias Bernoulli para cada instancia y cada clase. Se tiene una variable por par de modelo-clase y con correlaci\'on entre variables representantes de distintos modelos para la misma clase. Esto es para simular como los modelos pueden tener resultados no independientes dada una instancia.
+Para comprobar que estimar la confusi\'on lleva a una funci\'on de costo que es de utilidad en el problema, se van a realizar dos experimentos. \\
+\vspace{3mm}
+Para ambos experimentos se ejecuta primero el sistema intervenido para un dataset del sistema, se estima su confusi\'on en el dataset del modelo y se ejecuta el modelo. \\
+\vspace{3mm}
+A su vez se ejecuta realmente el sistema con el dataset del modelo para comparar los resultados reales con los que provee la funci\'on de peor caso.
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Experimentaci\'on}
+El sistema utilizado tiene 2 modelos, que clasifican como clase Positiva o Negativa. El fusionador puede ser un OR/AND l\'ogico. \\
+\vspace{3mm}
+Los resultados de ambos modelos fueron simulados con variables aleatorias Bernoulli para cada instancia y cada clase. Las variables de una misma clase pueden no ser independientes entre s\'i.
 \end{frame}
 
 
 
 \begin{frame}
 \frametitle{Experimentaci\'on}
-La experimentaci\'on fue separada en dos etapas. \\
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={font=\small},
+datos/.style={draw, fill=red!10, minimum width=1.7cm, minimum height=1cm},
+modelo/.style={draw, fill=blue!10, minimum width=1.7cm, minimum height=1cm},
+fusionador/.style={draw, fill=green!10, minimum width=6cm, minimum height=1cm},
+sistema/.style={draw, fill=gray!5}
+]
+% Datos
+\node[datos] (datos1) at (-2,3) {Im\'agenes};
+\node[datos] (datos2) at (2,3) {Historia};
+% Sistema
+\node[sistema, minimum width=8cm, minimum height=4cm] (sistema) at (0,0) {};
+% Modelos
+\node[modelo] (modelo1) at (-2,1) {Modelo 1};
+\node[modelo] (modelo2) at (2,1) {Modelo 2};
+% Fusionador
+\node[fusionador] (fusionador) at (0,-1) {Fusionador};
+% Salida
+\node[datos] (resultado) at (0,-3) {Predicci\'on};
+% Aristas
+\draw[->] (datos1) to (modelo1);
+\draw[->] (datos2) to (modelo2);
+\draw[->] (modelo1) to (fusionador);
+\draw[->] (modelo2) to (fusionador);
+\draw[->] (fusionador) to (resultado);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Experimento 1}
+\begin{itemize}
+\item Los accuracies de ambos modelos 0.5 ambas clases
+\item Fusionador de tipo OR
+\item Correlaci\'on clase Positive de 0.95
+\item Correlaci\'on clase Negative de -0.95
+\end{itemize}
 \vspace{3mm}
-La primera etapa compuesta por una evaluaci\'on inicial del sistema sin el modelo de hist\'orias cl\'inicas. Aqu\'i son estimadas las precisiones del sistema al intervenir en los resultados del modelo para cada instancia:\\
+Se asignan distintos tamaños en cada dataset y para cada combinaci\'on se ejecuta 1000 veces y se reporta: \\
 \vspace{3mm}
 \begin{itemize}
-\begin{minipage}{0.4\textwidth}
-\item \IPTP
-\item \IPFN
-\item \IPFP
-\item \IPTN
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\item \INTP
-\item \INFN
-\item \INFP
-\item \INTN
-\end{minipage}
+\item $P(PeorCaso \geq EvalReal)$
 \end{itemize}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{Experimentaci\'on}
-La segunda etapa corre el modelo en un nuevo conjunto de datos distinto, generado con la misma distribuci\'on que el anterior y calcula las confusi\'ones de cada resultado. Luego eval\'ua la funci\'on de costo de peor caso para ese conjunto de datos.\\
-Por otro lado, simula lo que hubiera pasado realmente con el sistema si esos resultados del modelo fuesen usados.
+\frametitle{Experimento 1}
+\centering
+\includegraphics[height=0.8\paperheight]{Imgs/fijo_1000.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimento 1}
+La probabilidad se acerca r\'apidamente a 1 a medida que ambas cantidades de instancias aumentan. \\
+\vspace{3mm}
+Para el caso de un sistema con dos modelos, a tamaños no tan grandes, el peor caso usando datasets distintos provee casi la misma informaci\'on que con un solo dataset.
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{Experimentaci\'on}
-Al correr el experimento se pudo ver que la funci\'on de peor caso, al ser usada en sistemas simulados con una muy mala interacci\'on con el modelo en cuesti\'on, puede llegar a subestimar el costo del sistema. Esto se debe a que cuando el sistema es evaluado sobre el nuevo conjunto de datos, este puede funcionar peor que lo anteriormente medido en la etapa 1 de los experimentos y que luego los c\'alculos no sean del todo precisos.
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Experimentaci\'on}
-Al ver esto se corrieron dos experimentos distintos:\\
-\vspace{3mm}
-Uno simulando un modelo con valores fijos de precision en ambos modelos y con una relaci\'on entre los resultados del modelo y del sistema bastante desfavorable. Su objetivo es analizar la probabilidad de que la estimaci\'on del peor caso de la funci\'on de costo sea realmente peor que la ejecuci\'on del sistema real y como esta probabilidad se comporta al cambiar la cantidad de instancias de testing de ambas fases del experimento.\\
-\vspace{3mm}
+\frametitle{Experimento 2}
 \begin{itemize}
-\item {P($\SPC$ $>$ $\STP$ * $\SCTP$ + $\SFN$ * $\SCFN$ + 
-
-\hspace{33mm}
-$\SFP$ * $\SCFP$ + $\STN$ * $\SCTN$)}
+    \item Accuracies de ambos modelos aleatorias
+    \item Fusionador aleatorio entre OR y AND
+    \item Correlaci\'ones aleatorias v\'alidas para los accuracies
 \end{itemize}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Experimentaci\'on}
-El otro simulando un sistema con precisiones de ambos modelos y con una interacci\'on entre el sistema y el modelo aleatorias, cuyo objetivo es evaluar que tanto se llega a acercar la evaluaci\'on real del sistema a la estimaci\'on de peor caso.\\
 \vspace{3mm}
-{\fontsize{15}{15}\selectfont
+Los tamaños de ambos datasets tienen 10000 instancias por clase, se ejecuta 100000 veces y se reporta: \\
+\vspace{3mm}
+{\fontsize{17}{17}\selectfont
 \begin{itemize}
-\item $\frac{\SCTP * \STP + \SCFN * \SFN + \SCTN * \STN + \SCFP * \SFP}{\SPC}$
+\item $\frac{EvalReal}{PeorCaso}$
 \end{itemize}
 }
 \end{frame}
@@ -75,21 +106,7 @@ El otro simulando un sistema con precisiones de ambos modelos y con una interacc
 
 
 \begin{frame}
-\frametitle{Resultados}
-\centering
-\includegraphics[height=0.8\paperheight]{Imgs/fijo_1000.png}
-\end{frame}
-
-\begin{frame}
-\frametitle{Resultados}
-En el gr\'afico anterior se ven los resultados del primer experimento, donde se grafica la probabilidad de que el peor caso sea efectivamente mayor a la evaluaci\'on del sistema. El sistema es uno compuesto por ambos modelos con accuracies de 50\% para ambas clases, con correlaci\'on de 0.95 para instancias de clase Positive y -0.95 de clase Negative y un fusionador de tipo OR.
-Se puede apreciar como la probabilidad se acerca r\'apidamente a 1 a medida que ambas cantidades de instancias aumentan. Se ejecut\'o 1000 veces para cada par de cantidades de instancias.
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Resultados}
+\frametitle{Experimento 2}
 \centering
 \includegraphics[height=0.8\paperheight]{Imgs/random_100000_10000.png}
 \end{frame}
@@ -97,6 +114,6 @@ Se puede apreciar como la probabilidad se acerca r\'apidamente a 1 a medida que 
 
 
 \begin{frame}
-\frametitle{Resultados}
-En el gr\'afico anterior se ven los resultados del segundo experimento, corrido con una cantidad de instancias fija en 20000 para cada experimento. Se corri\'o el experimento 100000 veces para graficar la distribuci\'on de la relaci\'on entre ambos valores. Aqu\'i se puede apreciar como la relaci\'on entre el costo del sistema y la estimaci\'on de peor caso tiene como cota superior el valor 1, salvo algunos valores at\'ipicos que levenemte lo superan.
+\frametitle{Experimento 2}
+El cociente entre ambos valores no suele pasar 1, siendo esto el resultado buscado. Incluso en los raros casos en los que si lo supera, no lo hace por un m\'argen muy grande. \\
 \end{frame}

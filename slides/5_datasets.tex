@@ -1,15 +1,54 @@
 \begin{frame}
-\frametitle{Datasets distintos para evaluaci\'on}
-Hasta ahora se trabaj\'o asumiendo que los datos en los que se eval\'uan las intervenci\'ones sobre el sistema, y los datos con los que se eval\'ua el modelo son los mismos, y se logr\'o encontrar una funci\'on de costo de peor caso para el sistema. Originalmente se buscaba conseguir una funci\'on de costo que fuera \'util tambi\'en para casos donde los datos en los que se eval\'ua el sistema intervenido y los datos con los que se eval\'ua el modelo fueran distintos.\\
+\frametitle{Problema 2}
+El segundo problema a resolver entonces va a ser analizar la funci\'on de costo para el modelo cuando los datasets sean distintos: \\
+\vspace{3mm}
+\begin{itemize}
+\item La funci\'on de costo de peor caso del modelo en el sistema es la analizada en el problema anterior
+\item Los datasets para evaluar el modelo y el sistema son distintos \item Los datos de ambos datasets provienen de la misma distribuci\'on
+\end{itemize}
+\end{frame}
+
+
+
+% \begin{frame}
+% \frametitle{Datasets distintos para evaluaci\'on}
+% Hasta ahora se trabaj\'o asumiendo que los datos en los que se eval\'uan las intervenci\'ones sobre el sistema, y los datos con los que se eval\'ua el modelo son los mismos, y se logr\'o encontrar una funci\'on de costo de peor caso para el sistema. Originalmente se buscaba conseguir una funci\'on de costo que fuera \'util tambi\'en para casos donde los datos en los que se eval\'ua el sistema intervenido y los datos con los que se eval\'ua el modelo fueran distintos.\\
+% \end{frame}
+
+
+
+\begin{frame}
+\frametitle{Datasets distintos}
+Veamos como interpretar la funci\'on anterior para poderla usar en caso que ambos datasets sean distintos: \\
+\vspace{3mm}
+\begin{itemize}
+    \item Las confusiones del modelo se ejecutan con el dataset del modelo sin problemas
+    \item Las confusiones del sistema intervenido se ejecutan con un dataset distinto
+    \item Se van a estimar las confusiones que hubiera tenido el sistema intervenido en el dataset del modelo
+\end{itemize}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{Datasets distintos para evaluaci\'on}
+\frametitle{Datasets distintos}
+Teniendo la confusi\'on de un sistema intervenido para un dataset, se estima la confusi\'on en otro de forma simple: \\
+\vspace{3mm}
 \begin{itemize}
-    \item La funci\'on de costo de peor caso solo utiliza el accuracy de los resultados del sistema con intervenido. Mientras ese accuracy medido sea el mismo que el accuracy que tendr\'ia el sistema (intervenido) en los datos con los que se eval\'ua el modelo, la funci\'on sigue calculando el peor caso correctamente.\\
-    \vspace{3mm}
-    \item Por ley de los grandes n\'umeros, si la predicci\'on del sistema en una instancia cualquiera es una variable aleatoria iid con media en el accuracy, mientras la cantidad de datos de cada conjunto de evaluaci\'on sea lo suficientemente grande, el accuracy de cada conjunto de evaluaci\'on va a tender a la m\'edia poblacional (accuracy real) y por lo tanto la medici\'on del primer conjunto de datos con intervenci\'on va a ser la misma que el accuracy efectivo para el segundo conjunto de datos.
+\item Primero se divide cada confusi\'on por la cantidad de instancias de su clase para saber el accuracy
+\item Luego se multiplica cada accuracy por la cantidad de instancias de su clase correspondiente en el dataset del modelo
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Datasets distintos}
+Por ley de los grandes n\'umeros, a medida que aumenta la cantidad de instancias de cada dataset se puede saber lo siguiente: \\
+\vspace{3mm}
+\begin{itemize}
+    \item Cada accuracy calculado para el dataset del sistema va a tender al accuracy de la poblaci\'on
+    \item Si se ejecutaba el sistema intervenido con los datos del modelo su accuracy hubiera tenidodo a la media de la poblaci\'on
+    \item Como en ambos casos el accuracy tiende a lo mismo, la estimaci\'on de la confusi\'on no va a ser muy lejana a la real 
 \end{itemize}
 \end{frame}

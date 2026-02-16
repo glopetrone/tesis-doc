@@ -1,0 +1,172 @@
+\begin{frame}
+\frametitle{Estrategia}
+\vspace{3mm}
+La estrategia del adversario entonces va a consistir en asignar a las instancias de tipo 3 prioritariamente como casos en los que el modelo falla. \\
+\vspace{3mm}
+Las instancias de tipo 1 y 4 son irrelevantes para el adversario por lo que le conviene asignarlas a aciertos del modelo.
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(FallosDelModelo, InstanciasTipo3)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+$\symbol{92}$$\symbol{92}$ La cantidad de fallos del modelo es la confusion de Falsos Negativos
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+\begin{itemize}
+    \item El modelo falla para todas las instancias de tipo 3 que sea posible
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+\begin{itemize}
+    \item El modelo falla para todas las instancias de tipo 3 que sea posible
+    \item Todas las instancias de tipo 4 suman un fallo
+    \item Las instancias de tipo 1 no suman fallos
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Fallos en peor caso}
+Si se pudiera saber la cantidad de instancias de cada tipo disponibles, se tiene la soluci\'on al peor caso. \\
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Instancias de tipo 1: \\
+\vspace{3mm}
+\begin{itemize}
+\item Tanto la intervenci\'on Positive como Negative del sistema aciertan
+\item Se saben las confusiones con intervenci\'on: \IPTP y \INTP
+\item A su vez, en base a las assumptions, se sabe que las instancias que suman en \INTP tambi\'en est\'an en \IPTP ya que se est\'a agregando evidencia
+\item \INTP es la cantidad de instancias tipo 1
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Instancias de tipo 4: \\
+\vspace{3mm}
+\begin{itemize}
+\item Tanto la intervenci\'on Positive como Negative del sistema fallan
+\item Se saben las confusiones con intervenci\'on: \IPFN y \INFN
+\item A su vez, en base a las assumptions, se sabe que las instancias que suman en \IPFN tambi\'en est\'an en \INFN ya que se est\'a quitando evidencia
+\item \IPFN es la cantidad de instancias tipo 4
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Instancias de tipo 3: \\
+\vspace{3mm}
+\begin{itemize}
+\item Solo la intervenci\'on Positive del sistema acierta
+\item Son las instancias restantes de la clase Positive
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+La cantidad de instancias de tipo 3 es:
+\vspace{3mm}
+\begin{itemize}
+\item CantidadPositive - \IPFN - \INTP
+\item (\IPTP + \IPFN) - \IPFN - \INTP 
+\item \IPTP - \INTP
+\end{itemize}
+\vspace{3mm}
+Esta resta en la cuenta representa las instancias en las que el sistema solo acierta si el modelo acierta, coincidiendo con las de tipo 3.
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Recordando la f\'ormula de peor caso:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+Reemplazando por las cantidades de instancias de cada tipo:
+\vspace{3mm}
+\begin{itemize}
+    \item \IPFN + Min(\MFN, \IPTP - \INTP)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Se puede hacer el mismo an\'alisis para la clase Negative, llegando a lo siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item Clase Positive: \IPFN + Min(\MFN, \IPTP - \INTP)
+    \item Clase Negative: \INFP + Min(\MFP, \INTN - \IPTN)
+\end{itemize}
+\vspace{3mm}
+Resultando en el peor caso del sistema:
+\vspace{3mm}
+\begin{itemize}
+    \item {\IPFN + Min(\MFN, \IPTP - \INTP) +
+
+    \INFP + Min(\MFP, \INTN - \IPTN)}
+\end{itemize}
+\end{frame}
