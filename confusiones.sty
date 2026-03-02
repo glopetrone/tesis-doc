@@ -1,19 +1,19 @@
 % ASSUMPTIONS
-\newcommand{\APmas}{$\{d\in D$ $|$ $ d_{2}=p \land S(d_{1})=p \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=p \land S_{*\rightarrow p}(d_{1})=p \}$}
+\newcommand{\APmas}{$\{d\in D$ $|$ $ d_{2}=p \land S_M(d_{1})=p \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=p \land S_{*\rightarrow p}(d_{1})=p \}$}
 
-\newcommand{\APmenos}{$\{d\in D$ $|$ $ d_{2}=p \land S(d_{1})=n \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=p \land S_{*\rightarrow n}(d_{1})=n \}$}
+\newcommand{\APmenos}{$\{d\in D$ $|$ $ d_{2}=p \land S_M(d_{1})=n \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=p \land S_{*\rightarrow n}(d_{1})=n \}$}
 
-\newcommand{\ANmas}{$\{d\in D$ $|$ $ d_{2}=n \land S(d_{1})=n \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=n \land S_{*\rightarrow n}(d_{1})=n \}$}
+\newcommand{\ANmas}{$\{d\in D$ $|$ $ d_{2}=n \land S_M(d_{1})=n \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=n \land S_{*\rightarrow n}(d_{1})=n \}$}
 
-\newcommand{\ANmenos}{$\{d\in D$ $|$ $ d_{2}=n \land S(d_{1})=p \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=n \land S_{*\rightarrow p}(d_{1})=p \}$}
+\newcommand{\ANmenos}{$\{d\in D$ $|$ $ d_{2}=n \land S_M(d_{1})=p \}$ $\subseteq$ $\{d\in D$ $|$ $ d_{2}=n \land S_{*\rightarrow p}(d_{1})=p \}$}
 
 
 
 % COSTOS SISTEMA
-\newcommand{\SCTP}{\text{$Costo_{TP}^{S}$}}
-\newcommand{\SCFN}{\text{$Costo_{FN}^{S}$}}
-\newcommand{\SCFP}{\text{$Costo_{FP}^{S}$}}
-\newcommand{\SCTN}{\text{$Costo_{TN}^{S}$}}
+\newcommand{\SCTP}{\text{$Costo_{TP}^{S_M}$}}
+\newcommand{\SCFN}{\text{$Costo_{FN}^{S_M}$}}
+\newcommand{\SCFP}{\text{$Costo_{FP}^{S_M}$}}
+\newcommand{\SCTN}{\text{$Costo_{TN}^{S_M}$}}
 
 % CONFUSIONES INTERVENCION
 \newcommand{\IPTP}{$m_{TP}^{S_{*\rightarrow p}, D}$}
@@ -25,10 +25,20 @@
 \newcommand{\INFP}{$m_{FP}^{S_{*\rightarrow n}, D}$}
 \newcommand{\INTN}{$m_{TN}^{S_{*\rightarrow n}, D}$}
 
+% CONFUSIONES INTERVENCION DATASET D'
+\newcommand{\IPTPDP}{$m_{TP}^{S_{*\rightarrow p}, D'}$}
+\newcommand{\IPFNDP}{$m_{FN}^{S_{*\rightarrow p}, D'}$}
+\newcommand{\IPFPDP}{$m_{FP}^{S_{*\rightarrow p}, D'}$}
+\newcommand{\IPTNDP}{$m_{TN}^{S_{*\rightarrow p}, D'}$}
+\newcommand{\INTPDP}{$m_{TP}^{S_{*\rightarrow n}, D'}$}
+\newcommand{\INFNDP}{$m_{FN}^{S_{*\rightarrow n}, D'}$}
+\newcommand{\INFPDP}{$m_{FP}^{S_{*\rightarrow n}, D'}$}
+\newcommand{\INTNDP}{$m_{TN}^{S_{*\rightarrow n}, D'}$}
+
 % CONFUSIONES FALSE NEGATIVE POR INSTANCIA
 \newcommand{\CIP}{\text{$S_{*\rightarrow p}(i)$}}
 \newcommand{\CIN}{\text{$S_{*\rightarrow n}(i)$}}
-\newcommand{\CS}{\text{$S(i)$}}
+\newcommand{\CS}{\text{$S_M(i)$}}
 
 % CONFUSIONES MODELO
 \newcommand{\MTP}{$m_{TP}^{M, D}$}
@@ -37,20 +47,20 @@
 \newcommand{\MTN}{$m_{TN}^{M, D}$}
 
 % CONFUSIONES SISTEMA
-\newcommand{\STP}{\text{\textcolor{blue}{$m_{TP}^{S, D}$}}}
-\newcommand{\SFN}{\text{\textcolor{blue}{$m_{FN}^{S, D}$}}}
-\newcommand{\SFP}{\text{\textcolor{blue}{$m_{FP}^{S, D}$}}}
-\newcommand{\STN}{\text{\textcolor{blue}{$m_{TN}^{S, D}$}}}
+\newcommand{\STP}{\text{\textcolor{blue}{$m_{TP}^{S_M, D}$}}}
+\newcommand{\SFN}{\text{\textcolor{blue}{$m_{FN}^{S_M, D}$}}}
+\newcommand{\SFP}{\text{\textcolor{blue}{$m_{FP}^{S_M, D}$}}}
+\newcommand{\STN}{\text{\textcolor{blue}{$m_{TN}^{S_M, D}$}}}
 
 % CONFUSIONES SISTEMA PARTICIONES POR MODELO
-\newcommand{\STPMP}{\text{\textcolor{blue}{$m_{TP}^{S, D_{*\rightarrow p}}$}}}
-\newcommand{\STPMN}{\text{\textcolor{blue}{$m_{TP}^{S, D_{*\rightarrow n}}$}}}
-\newcommand{\SFNMP}{\text{\textcolor{blue}{$m_{FN}^{S, D_{*\rightarrow p}}$}}}
-\newcommand{\SFNMN}{\text{\textcolor{blue}{$m_{FN}^{S, D_{*\rightarrow n}}$}}}
-\newcommand{\SFPMP}{\text{\textcolor{blue}{$m_{FP}^{S, D_{*\rightarrow p}}$}}}
-\newcommand{\SFPMN}{\text{\textcolor{blue}{$m_{FP}^{S, D_{*\rightarrow n}}$}}}
-\newcommand{\STNMP}{\text{\textcolor{blue}{$m_{TN}^{S, D_{*\rightarrow p}}$}}}
-\newcommand{\STNMN}{\text{\textcolor{blue}{$m_{TN}^{S, D_{*\rightarrow n}}$}}}
+\newcommand{\STPMP}{\text{\textcolor{blue}{$m_{TP}^{S_M, D_{*\rightarrow p}}$}}}
+\newcommand{\STPMN}{\text{\textcolor{blue}{$m_{TP}^{S_M, D_{*\rightarrow n}}$}}}
+\newcommand{\SFNMP}{\text{\textcolor{blue}{$m_{FN}^{S_M, D_{*\rightarrow p}}$}}}
+\newcommand{\SFNMN}{\text{\textcolor{blue}{$m_{FN}^{S_M, D_{*\rightarrow n}}$}}}
+\newcommand{\SFPMP}{\text{\textcolor{blue}{$m_{FP}^{S_M, D_{*\rightarrow p}}$}}}
+\newcommand{\SFPMN}{\text{\textcolor{blue}{$m_{FP}^{S_M, D_{*\rightarrow n}}$}}}
+\newcommand{\STNMP}{\text{\textcolor{blue}{$m_{TN}^{S_M, D_{*\rightarrow p}}$}}}
+\newcommand{\STNMN}{\text{\textcolor{blue}{$m_{TN}^{S_M, D_{*\rightarrow n}}$}}}
 
 % EVALUACION SISTEMA
-\newcommand{\SPC}{\text{$EvalPeorCaso^{S}$}}
+\newcommand{\SPC}{\text{$EvalPeorCaso^{S_M}$}}

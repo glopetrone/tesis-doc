@@ -1,6 +1,6 @@
 \begin{frame}
 \frametitle{Introducci\'on}
-Se tiene un sistema clasificador con distintos modelos en paralelo. Cada uno de esos modelos mira features de los datos y devuelve una clase. Luego se fusionan sus resultados mediante alg\'un m\'etodo, resultando en que el sistema determina la clase del dato de forma un\'ivoca. \\
+Para resolver un probema de clasificaci\'on, se tiene un sistema compuesto con distintos modelos componentes en paralelo y un fusionador. Cada uno de esos modelos mira features de los datos y devuelve una clase. Luego se fusionan sus resultados mediante alg\'un m\'etodo, resultando en que el sistema determina la clase del dato de forma un\'ivoca. \\
 \vspace{3mm}
 Particularmente, el sistema resuelve problemas de clasificaci\'on binaria.
 \end{frame}
@@ -73,8 +73,8 @@ sistema/.style={draw, fill=gray!5}
 \begin{frame}
 \frametitle{Objetivo}
 \begin{itemize}
-\item Evaluar un modelo de forma independiente al sistema
-\item Obtener una estimaci\'on \'util del comportamiento que tendr\'a el sistema con ese modelo
+\item Evaluar un modelo componente de forma independiente al sistema
+\item Obtener una estimaci\'on del rendimiento del sistema o una funci\'on de costo del sistema en base a esa evaluaci\'on
 \end{itemize}
 \end{frame}
 
@@ -116,10 +116,10 @@ sistema/.style={draw, fill=gray!5}
 Datos de los que se dispone para el problema:\\
 \vspace{3mm}
 \begin{itemize}
-\item El sistema incompleto, faltando un modelo
+\item El sistema compuesto incompleto, faltando un modelo
 \item Una funci\'on de costo para el sistema
 \item Datos para la evaluaci\'on del sistema
-\item El modelo a evaluar
+\item El modelo componente a evaluar
 \item Datos para la evaluaci\'on del modelo
 \end{itemize}
 \end{frame}
@@ -194,16 +194,16 @@ Se puede querer reemplazar o añadir un modelo al sistema. Al momento de realiza
 \frametitle{Intervenci\'on}
 Se va a utilizar una operaci\'on sobre el sistema llamada intervenci\'on, basada en la intervenci\'on de las redes bayesianas. \\
 \vspace{3mm}
-Al sistema sin el modelo se le inserta en ese lugar un modelo simple que hace siempre lo mismo a pesar del dato de entrada para poder analizar su comportamiento. \\
+Al sistema incompleto, en el lugar del modelo se le inserta una funci\'on de clasificaci\'on constante. Esta funci'/on ignora el dato de entrada y devuelve siempre el mismso resultado de clasificaci\'on.
 \end{frame}
 
 
 
 \begin{frame}
 \frametitle{Intervenci\'on}
-Un ejemplo de intervenci\'on podr\'ia ser correr el sistema diciendole que el modelo devuelve siempre Positive. Luego se podr\'ia calcular la matriz de confusi\'on asociada a sus resultados. \\
+Los dos casos de intervenci\'on que ser\'an usados son la evaluaci\'on del sistema con un componente que devuelve siempre Positive y con uno que devuelve siempre Negative. \\
 \vspace{3mm}
-La otra intervenci\'on que se va a usar es siempre Negative.
+Luego se podr\'ia calcular la matriz de confusi\'on asociada a sus resultados.
 \end{frame}
 
 
@@ -251,8 +251,8 @@ Para poder comparar entre modelos se separa el proceso en dos partes:\\
 \begin{frame}
 \frametitle{Estimaci\'on del costo del sistema}
 \begin{itemize}
-\item Idealmente, se buscar\'ia estimar de forma precisa el resultado de la ejecuci\'on del sistema si se hubiera corrido con el modelo. 
-\item Esto es imposible ya que dados modelos distintos la misma matriz de confusi\'on pueden llevar a resultados muy distintos en el sistema segun su predicci\'on en cada instancia.
-\item Por lo tanto la m\'etrica a evaluar va a ser, dado un sistema y dada la matriz de confusi\'on de un modelo, estimar el peor caso del sistema ejecutado con ese modelo. 
+% \item Idealmente, se buscar\'ia estimar de forma precisa el resultado de la ejecuci\'on del sistema si se hubiera corrido con el modelo. 
+% \item Esto es imposible ya que dados modelos distintos la misma matriz de confusi\'on pueden llevar a resultados muy distintos en el sistema segun su predicci\'on en cada instancia.
+\item La m\'etrica a evaluar va a ser, dado un sistema y dada la matriz de confusi\'on de un modelo, calcular una cota al costo del sistema, es decir, el peor caso del sistema dado que tenga al modelo como componente.
 \end{itemize}
 \end{frame}

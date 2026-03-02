@@ -1,5 +1,5 @@
 \begin{frame}
-\frametitle{Problema 1}
+\frametitle{Problema 1: Mismo dataset}
 El primer problema a resolver entonces va a ser encontrar una funci\'on de costo para el modelo con las siguientes condiciones: \\
 \vspace{3mm}
 \begin{itemize}
@@ -12,22 +12,21 @@ El primer problema a resolver entonces va a ser encontrar una funci\'on de costo
 
 
 
-\begin{frame}[t]
+\begin{frame}
 \frametitle{Notaci\'on}
-\vspace{6mm}
-Para definir el problema formalmente se introduce la notaci\'on $m^{f,D}_{ij}$ para denotar un valor de una matriz de confusi\'on: \\
-\vspace{3mm}
-$m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=i \land d_{2}=j\}$$|$ \\
+$m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=j \land d_{2}=i\}$$|$ \\
 \vspace{3mm}
 \begin{itemize}
 \item $i$ es la clase real
-\item $j$ es la clase que predice el modelo f sobre el dato
+\item $j$ es la clase que predice el modelo f
+% \item Las clases ser\'an reemplazadas por su nombre
+% \item Los valores ij ser\'an reemplazados por el nombre de la confusi\'on
 \item $D$ es el dataset utilizado, conteniendo un conjunto de pares $d_1$ instancia, $d_2$ clase real asociada, y su valor por defecto que representa todos los datos disponibles es $D$
 \item $f$ es el modelo usado y puede valer:\\
 \begin{itemize}
 \item $M$ como el modelo a analizar\\
-\item $S$ como el sistema completo con el modelo\\
-\item $S_{*\rightarrow x}$ como el sistema con un modelo intervenido que predice de forma constante la clase $x$ para cualquier instancia\\
+\item $S_{M}$ como el sistema compuesto con el modelo M\\
+\item $S_{*\rightarrow x}$ como el sistema intervenido, donde el componente es la funci\'on de clasificaci\'on constante que devuelve la clase $x$
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -37,11 +36,11 @@ $m^{f,D}_{ij}$ = $|$$\{d \in D $ $|$ $f(d_{1})=i \land d_{2}=j\}$$|$ \\
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S_{M}$: \\
 \vspace{4mm}
 \begin{minipage}{0.6\textwidth}
 \begin{itemize}
-\item \APmenos
+\item \APmas
 \end{itemize}
 \end{minipage} \\
 \vspace{4mm}
@@ -53,7 +52,7 @@ $\symbol{92}$$\symbol{92}$ Agregar evidencia solo puede mejorar la predicci\'on
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S_{M}$: \\
 \vspace{4mm}
 \begin{minipage}{0.6\textwidth}
 \begin{itemize}
@@ -70,7 +69,7 @@ $\symbol{92}$$\symbol{92}$ Restar evidencia solo puede empeorar la predicci\'on
 \begin{frame}[t]
 \frametitle{Especificaci\'on del problema}
 \vspace{6mm}
-Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S$: \\
+Se asume lo siguiente sobre el comportamiento del sistema para cualquier conjunto de instancias $D$, modelo $M$ y sistema $S_{M}$: \\
 \vspace{4mm}
 \begin{minipage}{0.6\textwidth}
 \begin{itemize}

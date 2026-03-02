@@ -44,11 +44,11 @@ Recordando la assumption 2 de la clase Positive:\\
 \vspace{3mm}
 \begin{table}[]
     \begin{tabular}{c|c|c|c|}
-        & \CIP & \CIN & Es V\'alido \\ \hline
-                            Instancia 1 & p & p &    \\ \hline
-                            Instancia 2 & n & p &    \\ \hline
-                            Instancia 3 & p & n &    \\ \hline
-                            Instancia 4 & n & n &    \\ \hline
+        & \CIP & \CIN & ¿Es factible? \\ \hline
+                            Tipo 1 & p & p &    \\ \hline
+                            Tipo 2 & n & p &    \\ \hline
+                            Tipo 3 & p & n &    \\ \hline
+                            Tipo 4 & n & n &    \\ \hline
     \end{tabular}
     \caption{Resultados posibles en instancias de clase Positive}
 \end{table}
@@ -69,11 +69,11 @@ Recordando la assumption 2 de la clase Positive:\\
 \vspace{3mm}
 \begin{table}[]
     \begin{tabular}{c|c|c|c|}
-        & \CIP & \CIN & Es V\'alido \\ \hline
-        \rowcolor{green!25} Instancia 1 & p & p & SI \\ \hline
-                            Instancia 2 & n & p &    \\ \hline
-                            Instancia 3 & p & n &    \\ \hline
-                            Instancia 4 & n & n &    \\ \hline
+        & \CIP & \CIN & ¿Es factible? \\ \hline
+        \rowcolor{green!25} Tipo 1 & p & p & SI \\ \hline
+                            Tipo 2 & n & p &    \\ \hline
+                            Tipo 3 & p & n &    \\ \hline
+                            Tipo 4 & n & n &    \\ \hline
     \end{tabular}
     \caption{Resultados posibles en instancias de clase Positive}
 \end{table}
@@ -94,11 +94,11 @@ Recordando la assumption 2 de la clase Positive:\\
 \vspace{3mm}
 \begin{table}[]
     \begin{tabular}{c|c|c|c|}
-        & \CIP & \CIN & Es V\'alido \\ \hline
-                            Instancia 1 & p & p & SI \\ \hline
-        \rowcolor{red!25}   Instancia 2 & n & p & NO \\ \hline
-                            Instancia 3 & p & n &    \\ \hline
-                            Instancia 4 & n & n &    \\ \hline
+        & \CIP & \CIN & ¿Es factible? \\ \hline
+                            Tipo 1 & p & p & SI \\ \hline
+        \rowcolor{red!25}   Tipo 2 & n & p & NO \\ \hline
+                            Tipo 3 & p & n &    \\ \hline
+                            Tipo 4 & n & n &    \\ \hline
     \end{tabular}
     \caption{Resultados posibles en instancias de clase Positive}
 \end{table}
@@ -119,11 +119,11 @@ Recordando la assumption 2 de la clase Positive:\\
 \vspace{3mm}
 \begin{table}[]
     \begin{tabular}{c|c|c|c|}
-        & \CIP & \CIN & Es V\'alido \\ \hline
-                            Instancia 1 & p & p & SI \\ \hline
-                            Instancia 2 & n & p & NO \\ \hline
-        \rowcolor{green!25} Instancia 3 & p & n & SI \\ \hline
-                            Instancia 4 & n & n &    \\ \hline
+        & \CIP & \CIN & ¿Es factible? \\ \hline
+                            Tipo 1 & p & p & SI \\ \hline
+                            Tipo 2 & n & p & NO \\ \hline
+        \rowcolor{green!25} Tipo 3 & p & n & SI \\ \hline
+                            Tipo 4 & n & n &    \\ \hline
     \end{tabular}
     \caption{Resultados posibles en instancias de clase Positive}
 \end{table}
@@ -144,11 +144,11 @@ Recordando la assumption 2 de la clase Positive:\\
 \vspace{3mm}
 \begin{table}[]
     \begin{tabular}{c|c|c|c|}
-        & \CIP & \CIN & Es V\'alido \\ \hline
-                            Instancia 1 & p & p & SI \\ \hline
-                            Instancia 2 & n & p & NO \\ \hline
-                            Instancia 3 & p & n & SI \\ \hline
-        \rowcolor{green!25} Instancia 4 & n & n & SI \\ \hline
+        & \CIP & \CIN & ¿Es factible? \\ \hline
+                            Tipo 1 & p & p & SI \\ \hline
+                            Tipo 2 & n & p & NO \\ \hline
+                            Tipo 3 & p & n & SI \\ \hline
+        \rowcolor{green!25} Tipo 4 & n & n & SI \\ \hline
     \end{tabular}
     \caption{Resultados posibles en instancias de clase Positive}
 \end{table}
@@ -158,14 +158,14 @@ Recordando la assumption 2 de la clase Positive:\\
 
 \begin{frame}
 \frametitle{Comportamiento de instancias}
+Solo las instancias de tipo 3 son en las que el adversario puede decidir para afectar el resultado del sistema: \\
+\vspace{3mm}
 \begin{itemize}
 \item Las instancias de tipo 1 nunca fallan independientemente del resultado del modelo
 \item No hay instancias de tipo 2
 \item Las instancias de tipo 3 solo fallan si el modelo falla
 \item Las instancias de tipo 4 siempre fallan independientemente del resultado del modelo
 \end{itemize}
-\vspace{3mm}
-Solo las instancias de tipo 3 son en las que el adversario puede decidir para afectar el resultado del sistema.
 \end{frame}
 
 

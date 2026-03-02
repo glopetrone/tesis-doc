@@ -1,20 +1,12 @@
 \begin{frame}
 \frametitle{Experimentaci\'on}
-Para comprobar que estimar la confusi\'on lleva a una funci\'on de costo que es de utilidad en el problema, se van a realizar dos experimentos. \\
+Se van a realizar 2 experimentos para comprobar esto: \\
 \vspace{3mm}
-Para ambos experimentos se ejecuta primero el sistema intervenido para un dataset del sistema, se estima su confusi\'on en el dataset del modelo y se ejecuta el modelo. \\
-\vspace{3mm}
-A su vez se ejecuta realmente el sistema con el dataset del modelo para comparar los resultados reales con los que provee la funci\'on de peor caso.
-\end{frame}
-
-
-
-
-\begin{frame}
-\frametitle{Experimentaci\'on}
-El sistema utilizado tiene 2 modelos, que clasifican como clase Positiva o Negativa. El fusionador puede ser un OR/AND l\'ogico. \\
-\vspace{3mm}
-Los resultados de ambos modelos fueron simulados con variables aleatorias Bernoulli para cada instancia y cada clase. Las variables de una misma clase pueden no ser independientes entre s\'i.
+\begin{itemize}
+\item Dos 2 modelos clasificadores en paralelo
+\item Fusionador OR/AND l\'ogico 
+\item Se simulan con variables aleatorias los resultados de clasificaci\'on de cada modelo
+\end{itemize}
 \end{frame}
 
 
@@ -49,6 +41,20 @@ sistema/.style={draw, fill=gray!5}
 \draw[->] (fusionador) to (resultado);
 \end{tikzpicture}
 \end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Metodolog\'ia}
+Para ambos experimentos la operaci\'on es la siguiente: \\
+\vspace{3mm}
+\begin{itemize}
+\item Se simula y guarda el resultado de la intervenci\'on en un dataset
+\item Se simula el resultado del modelo para otro dataset
+\item Se calcula la funci\'on de costo de peor caso estimando las confusiones de intervenci\'on
+\item Se ejecuta el sistema completo en el dataset del modelo para comprobar los resultados
+\end{itemize}
 \end{frame}
 
 
@@ -115,5 +121,5 @@ Los tamaños de ambos datasets tienen 10000 instancias por clase, se ejecuta 100
 
 \begin{frame}
 \frametitle{Experimento 2}
-El cociente entre ambos valores no suele pasar 1, siendo esto el resultado buscado. Incluso en los raros casos en los que si lo supera, no lo hace por un m\'argen muy grande. \\
+El cociente entre ambos valores no suele pasar 1, siendo esto el resultado buscado. Incluso en los raros casos en los que si lo supera, no lo hace por un m\'argen muy grande.
 \end{frame}

@@ -1,9 +1,9 @@
 \begin{frame}
-\frametitle{Problema 2}
+\frametitle{Problema 2: Distintos datasets}
 El segundo problema a resolver entonces va a ser analizar la funci\'on de costo para el modelo cuando los datasets sean distintos: \\
 \vspace{3mm}
 \begin{itemize}
-\item La funci\'on de costo de peor caso del modelo en el sistema es la analizada en el problema anterior
+\item La funci\'on de costo de peor caso del modelo en el sistema es la anterior
 \item Los datasets para evaluar el modelo y el sistema son distintos \item Los datos de ambos datasets provienen de la misma distribuci\'on
 \end{itemize}
 \end{frame}
@@ -19,7 +19,9 @@ El segundo problema a resolver entonces va a ser analizar la funci\'on de costo 
 
 \begin{frame}
 \frametitle{Datasets distintos}
-Veamos como interpretar la funci\'on anterior para poderla usar en caso que ambos datasets sean distintos: \\
+Recordando la funci\'on de costo de peor caso: \\
+\vspace{3mm}
+\IPFN + Min(\MFN, \IPTP - \INTP)
 \vspace{3mm}
 \begin{itemize}
     \item Las confusiones del modelo se ejecutan con el dataset del modelo sin problemas
@@ -38,6 +40,8 @@ Teniendo la confusi\'on de un sistema intervenido para un dataset, se estima la 
 \item Primero se divide cada confusi\'on por la cantidad de instancias de su clase para saber el accuracy
 \item Luego se multiplica cada accuracy por la cantidad de instancias de su clase correspondiente en el dataset del modelo
 \end{itemize}
+\vspace{3mm}
+$\overline{\text{$m_{TP}^{S_{*\rightarrow p}, D}$}}$ = \IPTPDP * $CantPositive^{D}$ / $CantPositive^{D'}$ 
 \end{frame}
 
 
@@ -49,6 +53,6 @@ Por ley de los grandes n\'umeros, a medida que aumenta la cantidad de instancias
 \begin{itemize}
     \item Cada accuracy calculado para el dataset del sistema va a tender al accuracy de la poblaci\'on
     \item Si se ejecutaba el sistema intervenido con los datos del modelo su accuracy hubiera tenidodo a la media de la poblaci\'on
-    \item Como en ambos casos el accuracy tiende a lo mismo, la estimaci\'on de la confusi\'on no va a ser muy lejana a la real 
+    \item Como ambos accuracies tienden a lo mismo, van a ser muy ceracanos
 \end{itemize}
 \end{frame}
