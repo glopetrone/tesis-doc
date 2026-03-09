@@ -26,25 +26,11 @@ Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basado
 Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
 \vspace{3mm}
 \begin{itemize}
-    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
-\end{itemize}
-\vspace{3mm}
-$\symbol{92}$$\symbol{92}$ La cantidad de fallos del modelo es la confusion de Falsos Negativos
-\end{frame}
-
-
-
-\begin{frame}[t]
-\frametitle{Fallos en peor caso}
-\vspace{6mm}
-Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
-\vspace{3mm}
-\begin{itemize}
-    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+    \item InstanciasTipo4 + Min(FallosDelModelo, InstanciasTipo3)
 \end{itemize}
 \vspace{3mm}
 \begin{itemize}
-    \item El modelo falla para todas las instancias de tipo 3 que sea posible
+    \item Todas las instancias de tipo 4 suman un fallo
 \end{itemize}
 \end{frame}
 
@@ -56,13 +42,46 @@ Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basado
 Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
 \vspace{3mm}
 \begin{itemize}
-    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+    \item InstanciasTipo4 + Min(FallosDelModelo, InstanciasTipo3)
 \end{itemize}
 \vspace{3mm}
 \begin{itemize}
-    \item El modelo falla para todas las instancias de tipo 3 que sea posible
     \item Todas las instancias de tipo 4 suman un fallo
     \item Las instancias de tipo 1 no suman fallos
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(FallosDelModelo, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+\begin{itemize}
+    \item Todas las instancias de tipo 4 suman un fallo
+    \item Las instancias de tipo 1 no suman fallos
+    \item El modelo falla para todas las instancias de tipo 3 que sea posible
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Fallos en peor caso}
+\vspace{6mm}
+Para la clase Positive, la f\'ormula que da la cantidad de fallos totales basados en esa estrategia es la siguiente:
+\vspace{3mm}
+\begin{itemize}
+    \item InstanciasTipo4 + Min(\MFN, InstanciasTipo3)
+\end{itemize}
+\vspace{3mm}
+\begin{itemize}
+\item La cantidad de fallos del modelo es la confusion de Falsos Negativos
 \end{itemize}
 \end{frame}
 

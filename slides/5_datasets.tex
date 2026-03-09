@@ -18,7 +18,7 @@ El segundo problema a resolver entonces va a ser analizar la funci\'on de costo 
 
 
 \begin{frame}
-\frametitle{Datasets distintos}
+\frametitle{Datos faltantes}
 Recordando la funci\'on de costo de peor caso: \\
 \vspace{3mm}
 \IPFN + Min(\MFN, \IPTP - \INTP)
@@ -33,8 +33,8 @@ Recordando la funci\'on de costo de peor caso: \\
 
 
 \begin{frame}
-\frametitle{Datasets distintos}
-Teniendo la confusi\'on de un sistema intervenido para un dataset, se estima la confusi\'on en otro de forma simple: \\
+\frametitle{Datos faltantes}
+Teniendo la confusi\'on resultante de correr un sistema intervenido para un dataset, se estima la confusi\'on en otro de forma simple: \\
 \vspace{3mm}
 \begin{itemize}
 \item Primero se divide cada confusi\'on por la cantidad de instancias de su clase para saber el accuracy
@@ -42,17 +42,4 @@ Teniendo la confusi\'on de un sistema intervenido para un dataset, se estima la 
 \end{itemize}
 \vspace{3mm}
 $\overline{\text{$m_{TP}^{S_{*\rightarrow p}, D}$}}$ = \IPTPDP * $CantPositive^{D}$ / $CantPositive^{D'}$ 
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Datasets distintos}
-Por ley de los grandes n\'umeros, a medida que aumenta la cantidad de instancias de cada dataset se puede saber lo siguiente: \\
-\vspace{3mm}
-\begin{itemize}
-    \item Cada accuracy calculado para el dataset del sistema va a tender al accuracy de la poblaci\'on
-    \item Si se ejecutaba el sistema intervenido con los datos del modelo su accuracy hubiera tenidodo a la media de la poblaci\'on
-    \item Como ambos accuracies tienden a lo mismo, van a ser muy ceracanos
-\end{itemize}
 \end{frame}

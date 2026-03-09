@@ -71,7 +71,7 @@ Para ambos experimentos la operaci\'on es la siguiente: \\
 Se asignan distintos tamaños en cada dataset y para cada combinaci\'on se ejecuta 1000 veces y se reporta: \\
 \vspace{3mm}
 \begin{itemize}
-\item $P(PeorCaso \geq EvalReal)$
+\item $P(PeorCasoEstimado \geq EvalReal)$
 \end{itemize}
 \end{frame}
 
@@ -104,7 +104,7 @@ Los tamaños de ambos datasets tienen 10000 instancias por clase, se ejecuta 100
 \vspace{3mm}
 {\fontsize{17}{17}\selectfont
 \begin{itemize}
-\item $\frac{EvalReal}{PeorCaso}$
+\item $\frac{EvalReal}{PeorCasoEstimado}$
 \end{itemize}
 }
 \end{frame}
@@ -122,4 +122,31 @@ Los tamaños de ambos datasets tienen 10000 instancias por clase, se ejecuta 100
 \begin{frame}
 \frametitle{Experimento 2}
 El cociente entre ambos valores no suele pasar 1, siendo esto el resultado buscado. Incluso en los raros casos en los que si lo supera, no lo hace por un m\'argen muy grande.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Explicaci\'on}
+La causa de estos resultados es que ambos datasets tienen datos provenientes de la misma distribuci\'on. \\
+\vspace{3mm}
+Por ley de los grandes n\'umeros, a medida que aumenta la cantidad de instancias de cada dataset se puede saber lo siguiente: \\
+\vspace{3mm}
+\begin{itemize}
+    \item El accuracy calculado para el dataset del sistema va a tender al accuracy de la poblaci\'on
+    \item Si se ejecutaba el sistema intervenido con los datos del modelo su accuracy hubiera tenidodo a la media de la poblaci\'on
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Explicaci\'on}
+Como ambos accuracies tienden a lo mismo, los c\'alculos van a ser correctos:
+\vspace{3mm}
+\begin{itemize}
+\item $\overline{\text{$m_{FN}^{S_{*\rightarrow p}, D}$}}$ $\xlongrightarrow{p}$ \IPFN
+\item $\overline{\text{$m_{TP}^{S_{*\rightarrow p}, D}$}}$ $\xlongrightarrow{p}$ \IPTP
+\item $\overline{\text{$m_{TP}^{S_{*\rightarrow n}, D}$}}$ $\xlongrightarrow{p}$ \INTP
+\end{itemize}
 \end{frame}
