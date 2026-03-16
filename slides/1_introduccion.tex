@@ -208,6 +208,44 @@ Luego se podr\'ia calcular la matriz de confusi\'on asociada a sus resultados.
 
 
 
+\newcommand{\Cross}{$\mathbin{\tikz [x=1.4ex,y=1.4ex,line width=.2ex, red] \draw (0,0) -- (1,1) (0,1) -- (1,0);}$}
+\begin{frame}
+\frametitle{Intervenci\'on ejemplo}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={font=\small},
+datos/.style={draw, fill=red!10, minimum width=1.7cm, minimum height=1cm},
+modelo/.style={draw, fill=blue!10, minimum width=1.7cm, minimum height=1cm},
+fusionador/.style={draw, fill=green!10, minimum width=6cm, minimum height=1cm},
+sistema/.style={draw, fill=gray!5}
+]
+% Datos
+\node[datos] (datos1) at (-2,3) {Im\'agenes};
+\node[datos] (datos2) at (2,3) {Historia};
+% Sistema
+\node[sistema, minimum width=8cm, minimum height=4cm] (sistema) at (0,0) {};
+% Modelos
+\node[modelo, fill=green!75] (modelo1) at (-2,1) {Positive};
+\node[modelo] (modelo2) at (2,1) {Modelo 2};
+% Fusionador
+\node[fusionador] (fusionador) at (0,-1) {Fusionador};
+% Salida
+\node[datos] (resultado) at (0,-3) {Predicci\'on};
+% Cruz
+\node (cruz) at (-2,2) {\Huge{\Cross}};
+% Aristas
+\draw[-] (datos1) to (cruz.center);
+\draw[->] (cruz.center) to (modelo1);
+\draw[->] (datos2) to (modelo2);
+\draw[->] (modelo1) to (fusionador);
+\draw[->] (modelo2) to (fusionador);
+\draw[->] (fusionador) to (resultado);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
 
 % \begin{frame}
 % \frametitle{Intervenci\'on}
@@ -237,7 +275,7 @@ Luego se podr\'ia calcular la matriz de confusi\'on asociada a sus resultados.
 
 
 \begin{frame}
-\frametitle{Estimaci\'on del costo del sistema}
+\frametitle{Costo en peor caso}
 Para poder comparar entre modelos se separa el proceso en dos partes:\\
 \vspace{3mm}
 \begin{itemize}
@@ -249,7 +287,7 @@ Para poder comparar entre modelos se separa el proceso en dos partes:\\
 
 
 \begin{frame}
-\frametitle{Estimaci\'on del costo del sistema}
+\frametitle{Costo en peor caso}
 \begin{itemize}
 % \item Idealmente, se buscar\'ia estimar de forma precisa el resultado de la ejecuci\'on del sistema si se hubiera corrido con el modelo. 
 % \item Esto es imposible ya que dados modelos distintos la misma matriz de confusi\'on pueden llevar a resultados muy distintos en el sistema segun su predicci\'on en cada instancia.
