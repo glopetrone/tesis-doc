@@ -3,90 +3,9 @@
 El primer problema a resolver entonces va a ser encontrar una funci\'on de costo para el modelo con las siguientes condiciones: \\
 \vspace{3mm}
 \begin{itemize}
-\item La funci\'on devuelve el peor caso del sistema dado que fuera ejecutado con el modelo
-\item Se tiene el resultado de ejecutar el sistema con intervenci\'on Positive y Negative en el modelo
+\item Funci\'on de costo de peor caso del sistema si fuera integrado con el modelo componente
 \item Los datasets para evaluar el modelo y el sistema son el mismo
 \end{itemize}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Funciones de costo}
-\begin{minipage}{0.40\textwidth}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & 7 & 3 \\ \hline
-        Neg & 4 & 6 \\ \hline
-    \end{tabular}
-    \caption{Confusi\'on del modelo}
-\end{table}
-\end{minipage}
-\begin{minipage}{0.16\textwidth}
-\begin{tikzpicture}
-\draw[->] (-0.8,0) to (0.8,0);
-\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.40\textwidth}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & ? & ? \\ \hline
-        Neg & ? & ? \\ \hline
-    \end{tabular}
-    \caption{Confusi\'on del sistema}
-\end{table}
-\end{minipage}
-\end{frame}
-
-
-
-\begin{frame}
-\frametitle{Funciones de costo}
-\begin{minipage}{0.40\textwidth}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & 5 & 5 \\ \hline
-        Neg & 4 & 6 \\ \hline
-    \end{tabular}
-    \caption{Confusi\'on del modelo}
-\end{table}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & 7 & 3 \\ \hline
-        Neg & 6 & 4 \\ \hline
-    \end{tabular}
-    \caption{Intervenci\'on positive}
-\end{table}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & 2 & 8 \\ \hline
-        Neg & 1 & 9 \\ \hline
-    \end{tabular}
-    \caption{Intervenci\'on negative}
-\end{table}
-\end{minipage}
-\begin{minipage}{0.16\textwidth}
-\begin{tikzpicture}
-\draw[->] (-0.8,2.5) to (0.8,0.3);
-\draw[->] (-0.8,0) to (0.8,0);
-\draw[->] (-0.8,-2.5) to (0.8,-0.3);
-\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.40\textwidth}
-\begin{table}[]
-    \begin{tabular}{c|c|c|}
-        & Pos & Neg \\ \hline
-        Pos & ? & ? \\ \hline
-        Neg & ? & ? \\ \hline
-    \end{tabular}
-    \caption{Confusi\'on del sistema}
-\end{table}
-\end{minipage}
 \end{frame}
 
 

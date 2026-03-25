@@ -136,15 +136,6 @@ Datos de los que se dispone para el problema:\\
 
 
 
-\begin{frame}
-\frametitle{Motivaci\'on}
-Una posible utilidad de esta funci\'on de costo puede ser realizar b\'usqueda de hiperpar\'ametros. \\
-\vspace{3mm}
-Se puede querer reemplazar o añadir un modelo al sistema. Al momento de realizar la b\'usqueda de hiperpar\'ametros para ese nuevo modelo, con esta funci\'on de costo se puede comparar entre modelos de forma mucho mas r\'apida y as\'i elegir a los m\'as adecuados, al no tener que ejecutar el sistema para cada modelo.
-\end{frame}
-
-
-
 % \begin{frame}
 % \frametitle{Redes Bayesianas}
 % La forma que se va a utilizar para modelar el problema es mediante una red bayesiana causal. Una red bayesiana causal es un DAG que se usa para representar distribuci\'ones probabilisticas sobre variables no independientes. Se tienen nodos para representar entidades, y aristas que representan causalidad entre esas entidades. Los nodos con doble c\'irculo son determin\'isticos dados los padres.
@@ -203,7 +194,7 @@ Al sistema incompleto, en el lugar del modelo se le inserta una funci\'on de cla
 \frametitle{Intervenci\'on}
 Los dos casos de intervenci\'on que ser\'an usados son la evaluaci\'on del sistema con un componente que devuelve siempre Positive y con uno que devuelve siempre Negative. \\
 \vspace{3mm}
-Luego se podr\'ia calcular la matriz de confusi\'on asociada a sus resultados.
+Luego se podr\'ian calcular las matrices de confusi\'on asociadas a sus resultados.
 \end{frame}
 
 
@@ -225,7 +216,7 @@ sistema/.style={draw, fill=gray!5}
 % Sistema
 \node[sistema, minimum width=8cm, minimum height=4cm] (sistema) at (0,0) {};
 % Modelos
-\node[modelo, fill=green!75] (modelo1) at (-2,1) {Positive};
+\node[modelo, fill=green!75] (modeloIntervencion) at (-2,1) {Positive};
 \node[modelo] (modelo2) at (2,1) {Modelo 2};
 % Fusionador
 \node[fusionador] (fusionador) at (0,-1) {Fusionador};
@@ -235,9 +226,9 @@ sistema/.style={draw, fill=gray!5}
 \node (cruz) at (-2,2) {\Huge{\Cross}};
 % Aristas
 \draw[-] (datos1) to (cruz.center);
-\draw[->] (cruz.center) to (modelo1);
+\draw[->] (cruz.center) to (modeloIntervencion);
 \draw[->] (datos2) to (modelo2);
-\draw[->] (modelo1) to (fusionador);
+\draw[->] (modeloIntervencion) to (fusionador);
 \draw[->] (modelo2) to (fusionador);
 \draw[->] (fusionador) to (resultado);
 \end{tikzpicture}
@@ -276,21 +267,185 @@ sistema/.style={draw, fill=gray!5}
 
 \begin{frame}
 \frametitle{Costo en peor caso}
-Para poder comparar entre modelos se separa el proceso en dos partes:\\
-\vspace{3mm}
 \begin{itemize}
-\item Primero es evaluado el sistema sin el modelo, usando la intervenci\'on. Se registran las probabilidades de acierto en el sistema intervenido con un modelo que da siempre positive, y uno que da siempre negative.
-\item Luego usando esos valores, se ejecuta el modelo de forma independiente para calcular alguna funci\'on de costo asociada.
+\item La m\'etrica a evaluar va a ser, dado un sistema y dado un potencial modelo componente, calcular una cota al costo del sistema, es decir, el peor caso del sistema dado que tenga a ese modelo como componente.
 \end{itemize}
 \end{frame}
 
 
 
 \begin{frame}
-\frametitle{Costo en peor caso}
+\frametitle{Motivaci\'on}
+Un posible caso de uso de esta funci\'on de costo puede ser realizar b\'usqueda de hiperpar\'ametros. \\
+\vspace{3mm}
+Otro posible uso puede ser la posibilidad de encargar el desarrollo del modelo componente a un tercero, sin la necesidad de darle todo el sistema para evaluarlo.
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplo de uso}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={font=\small},
+datos/.style={draw, fill=red!10, minimum width=1.7cm, minimum height=1cm},
+modelo/.style={draw, fill=blue!10, minimum width=1.7cm, minimum height=1cm},
+fusionador/.style={draw, fill=green!10, minimum width=6cm, minimum height=1cm},
+sistema/.style={draw, fill=gray!5}
+]
+% Datos
+\node[datos] (datos1) at (-2,3) {Im\'agenes};
+\node[datos] (datos2) at (2,3) {Historia};
+% Sistema
+\node[sistema, minimum width=8cm, minimum height=4cm] (sistema) at (0,0) {};
+% Modelos
+\node[modelo, fill=blue!20] (modeloNuevo) at (-5.75,1) {Modelo 1};
+\node[modelo, fill=blue!20] (modelo1) at (-2,1) {Modelo 1};
+\node[modelo] (modelo2) at (2,1) {Modelo 2};
+% Fusionador
+\node[fusionador] (fusionador) at (0,-1) {Fusionador};
+% Salida
+\node[datos] (resultado) at (0,-3) {Predicci\'on};
+% Aristas
+\draw[->] (datos1) to (modelo1);
+\draw[->] (datos2) to (modelo2);
+\draw[->] (modeloNuevo) to (modelo1);
+\draw[->] (modelo1) to (fusionador);
+\draw[->] (modelo2) to (fusionador);
+\draw[->] (fusionador) to (resultado);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplo de uso}
+\begin{center}
+\begin{tikzpicture}[
+every node/.style={font=\small},
+datos/.style={draw, fill=red!10, minimum width=1.7cm, minimum height=1cm},
+modelo/.style={draw, fill=blue!10, minimum width=1.7cm, minimum height=1cm},
+fusionador/.style={draw, fill=green!10, minimum width=6cm, minimum height=1cm},
+sistema/.style={draw, fill=gray!5}
+]
+% Datos
+\node[datos] (datos1) at (-2,3) {Im\'agenes};
+\node[datos] (datos2) at (2,3) {Historia};
+\node[datos] (datos3) at (-5.75,3) {Im\'agenes};
+% Sistema
+\node[sistema, minimum width=8cm, minimum height=4cm] (sistema) at (0,0) {};
+% Modelos
+\node[modelo, fill=blue!20] (modelo1) at (-5.75,1) {Modelo 1};
+\node[modelo, fill=gray!50] (modeloIntervencion) at (-2,1) {Intervenci\'on};
+\node[modelo] (modelo2) at (2,1) {Modelo 2};
+% Fusionador
+\node[fusionador] (fusionador) at (0,-1) {Fusionador};
+% Salida
+\node[datos] (resultado) at (0,-3) {Predicci\'on};
+% Cruz
+\node (cruz) at (-2,2) {\Huge{\Cross}};
+% Aristas
+\draw[->] (datos3) to (modelo1);
+\draw[-] (datos1) to (cruz.center);
+\draw[->] (cruz.center) to (modeloIntervencion);
+\draw[->] (datos2) to (modelo2);
+\draw[->] (modeloIntervencion) to (fusionador);
+\draw[->] (modelo2) to (fusionador);
+\draw[->] (fusionador) to (resultado);
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplo de uso}
+\begin{minipage}{0.40\textwidth}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & 7 & 3 \\ \hline
+        Neg & 4 & 6 \\ \hline
+    \end{tabular}
+    \caption{Confusi\'on del modelo}
+\end{table}
+\end{minipage}
+\begin{minipage}{0.16\textwidth}
+\begin{tikzpicture}
+\draw[->] (-0.8,0) to (0.8,0);
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.40\textwidth}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & ? & ? \\ \hline
+        Neg & ? & ? \\ \hline
+    \end{tabular}
+    \caption{Confusi\'on del sistema}
+\end{table}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Ejemplo de uso}
+\begin{minipage}{0.40\textwidth}
+\footnotesize
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & 5 & 5 \\ \hline
+        Neg & 4 & 6 \\ \hline
+    \end{tabular}
+    \caption{Confusi\'on del modelo}
+\end{table}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & 7 & 3 \\ \hline
+        Neg & 6 & 4 \\ \hline
+    \end{tabular}
+    \caption{Intervenci\'on positive}
+\end{table}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & 2 & 8 \\ \hline
+        Neg & 1 & 9 \\ \hline
+    \end{tabular}
+    \caption{Intervenci\'on negative}
+\end{table}
+\end{minipage}
+\begin{minipage}{0.16\textwidth}
+\begin{tikzpicture}
+\draw[->] (-0.8,2.5) to (0.8,0.3);
+\draw[->] (-0.8,0) to (0.8,0);
+\draw[->] (-0.8,-2.5) to (0.8,-0.3);
+\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.40\textwidth}
+\begin{table}[]
+    \begin{tabular}{c|c|c|}
+        & Pos & Neg \\ \hline
+        Pos & ? & ? \\ \hline
+        Neg & ? & ? \\ \hline
+    \end{tabular}
+    \caption{Confusi\'on del sistema}
+\end{table}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Etapas de la evaluaci\'on}
+Para poder comparar entre modelos se separa el proceso en dos partes:\\
+\vspace{3mm}
 \begin{itemize}
-% \item Idealmente, se buscar\'ia estimar de forma precisa el resultado de la ejecuci\'on del sistema si se hubiera corrido con el modelo. 
-% \item Esto es imposible ya que dados modelos distintos la misma matriz de confusi\'on pueden llevar a resultados muy distintos en el sistema segun su predicci\'on en cada instancia.
-\item La m\'etrica a evaluar va a ser, dado un sistema y dada la matriz de confusi\'on de un modelo, calcular una cota al costo del sistema, es decir, el peor caso del sistema dado que tenga al modelo como componente.
+\item Primero es evaluado el sistema sin el modelo, usando la intervenci\'on. Se registran las probabilidades de acierto en el sistema intervenido con un modelo que da siempre positive, y uno que da siempre negative.
+\item Luego usando esos valores, se ejecuta el modelo de forma independiente para calcular alguna funci\'on de costo asociada.
 \end{itemize}
 \end{frame}
